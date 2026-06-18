@@ -1,0 +1,82 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as CheckboxStories from "./Checkbox.stories";
+
+<Meta of={CheckboxStories} name="Overview" />
+
+# Checkbox
+
+A selection control for **independent on/off choices** (accept terms, toggle a row, “select
+all”). Built on Radix for focus, keyboard, and ARIA — including the **indeterminate** state —
+and styled to the Swiss Army Figma with semantic tokens only.
+
+## When to use
+
+- **Single boolean** — opt in/out of one thing (e.g. «قوانین و مقررات را می‌پذیرم»).
+- **Multi-select lists** — several independent options (for a grouped set with a shared
+  label, use **CheckboxGroup**).
+- **“Select all”** — drive the parent with the `indeterminate` state when only some children
+  are checked.
+- For **mutually exclusive** choices use Radio, not Checkbox.
+
+## Anatomy
+
+A 16px box (Figma `Checkbox/base`) + an optional label. In RTL the box sits inline-start
+(visually right) and the label follows; the glyph is a 12px check or minus.
+
+<Canvas of={CheckboxStories.Default} />
+
+## States (fill)
+
+The Radix `checked` value drives three fills — unchecked, checked, and `indeterminate`:
+
+<Canvas of={CheckboxStories.Indeterminate} />
+
+- **Unselected** — empty box with a neutral border.
+- **Selected** — filled with the product `primary` color, white check glyph.
+- **Indeterminate** — filled, minus glyph; for partially-selected “select all” parents.
+
+## Status
+
+The `status` axis maps to props: default, `error`, `readOnly`, and `disabled`. Each has its
+own idle / hover / pressed colors and a hover “shadow” ring, all from design tokens.
+
+<Canvas of={CheckboxStories.Matrix} />
+
+### Error
+
+Set `error` for invalid required checkboxes (e.g. terms not accepted on submit). The box
+border/fill turns to the `error` ramp; pairs with `aria-invalid`.
+
+<Canvas of={CheckboxStories.Error} />
+
+### Read-only
+
+Set `readOnly` to **show** a value without allowing edits. Unlike disabled, it isn't greyed
+out — the box stays white with a muted glyph and is removed from the tab order.
+
+<Canvas of={CheckboxStories.ReadOnly} />
+
+### Disabled
+
+<Canvas of={CheckboxStories.Disabled} />
+
+## Accessibility
+
+- **Semantics & keyboard** — Radix renders a real checkbox button: `Space` toggles, focus is
+  visible, and the state is announced (`aria-checked`, including `mixed` for indeterminate).
+- **Label association** — passing `label` wires `htmlFor`/`id` automatically (or pass your own
+  `id`); clicking the label toggles the box. Without a label, provide an `aria-label`.
+- **Error** — `error` sets `aria-invalid`; pair with a visible message in the form field.
+- **Read-only** — sets `aria-readonly` and removes the control from the tab order.
+
+## Token-driven styling
+
+Every color, size, border, and motion value is a semantic token — no hardcoded values. The
+box is `--space-16`, the glyph `--space-12`, and the status colors come from the
+`background/*`, `border/*`, and `icon/*` ramps, so themes switch with no component changes.
+
+## API reference
+
+<Controls of={CheckboxStories.Default} />
+
+<ArgTypes of={CheckboxStories.default} />
