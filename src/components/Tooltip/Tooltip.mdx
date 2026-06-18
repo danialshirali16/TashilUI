@@ -1,0 +1,82 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as TooltipStories from "./Tooltip.stories";
+
+<Meta of={TooltipStories} name="Overview" />
+
+# Tooltip
+
+A small floating label that explains a control on hover or focus. Built on Radix (hover +
+focus triggers, keyboard, ARIA, collision handling) and styled to the Swiss Army Figma — a
+slate surface with `body/sm` text.
+
+## When to use
+
+- **Clarify an unlabelled control** — icon-only buttons, truncated text, a terse field.
+- **Short, supplementary hints** — not essential information (tooltips are hidden until hover
+  and unavailable on touch). For required info, use visible text.
+- Keep it brief: the surface caps at **256px** wide and wraps.
+
+<Canvas of={TooltipStories.Default} />
+
+## Anatomy
+
+A `children` trigger (any focusable element via `asChild`) + the floating `content`. Wrap your
+app once in `TooltipProvider`:
+
+```tsx
+import { Tooltip, TooltipProvider } from "tashil-ui";
+
+<TooltipProvider>
+  <Tooltip content="راهنمای این دکمه">
+    <Button iconOnly aria-label="راهنما"><IconHelp /></Button>
+  </Tooltip>
+</TooltipProvider>
+```
+
+## Position
+
+`side` (Figma `positioned`: top / right / bottom / left) and `align` (Figma `placement`:
+start / center / end) set where the tooltip appears. Radix flips `side` automatically in RTL
+and on collision, and keeps an **8px gap from the viewport edge** (`collisionPadding`).
+
+<Canvas of={TooltipStories.Sides} />
+<Canvas of={TooltipStories.Alignment} />
+
+## Arrow
+
+The pointer arrow is **optional and off by default** (per the Figma note); enable it with
+`withArrow`. It's 12×6 and inherits the surface color.
+
+<Canvas of={TooltipStories.WithArrow} />
+
+## Long text
+
+Content wraps at the 256px max width.
+
+<Canvas of={TooltipStories.LongText} />
+
+## Motion & timing
+
+Opens with a **GROW** transition (scale + fade from the side facing the trigger) over
+`--duration-fast`. Show delay is **100ms** (`delayDuration`).
+
+## Accessibility
+
+- **Triggers** — opens on hover *and* keyboard focus; `Esc` dismisses. Radix wires
+  `aria-describedby` from the trigger to the content.
+- **Not for essential info** — tooltips don't appear on touch and vanish on blur; never put
+  required content (or interactive elements) inside one.
+- **Icon-only triggers** still need their own `aria-label` — the tooltip describes, it doesn't
+  name the control.
+
+## Token-driven styling
+
+Surface is `background/accent/gray/bolder`, text `text/oncolor/default`, padding `--space-8`,
+radius `--radius-2`, type `body/sm` — all semantic tokens. The only raw value is the 256px max
+width, which has no design token.
+
+## API reference
+
+<Controls of={TooltipStories.Default} />
+
+<ArgTypes of={TooltipStories.default} />
