@@ -8,25 +8,29 @@ export interface TooltipProps {
   content: ReactNode;
   /** Trigger element. */
   children: ReactNode;
-  /** Preferred side. @default "top" */
+  /** Preferred side (Figma `positioned`). @default "top" */
   side?: RadixTooltip.TooltipContentProps["side"];
-  /** Open delay in ms. @default 200 */
+  /** Alignment along the side (Figma `placement` Start/Middle/End). @default "center" */
+  align?: RadixTooltip.TooltipContentProps["align"];
+  /** Open delay in ms (Figma: 100). @default 100 */
   delayDuration?: number;
-  /** Render the small pointer arrow. @default true */
+  /** Render the small pointer arrow (Figma: optional, off by default). @default false */
   withArrow?: boolean;
   className?: string;
 }
 
 /**
- * Tooltip on Radix (hover/focus, keyboard, ARIA, collision handling).
- * Radix flips `side` automatically for RTL, so positioning stays correct.
+ * Tooltip on Radix (hover/focus, keyboard, ARIA, collision handling), styled to
+ * the Swiss Army Figma: slate surface, 8px padding, radius-2, body/sm text,
+ * 256px max width, GROW motion. Radix flips `side` for RTL automatically.
  */
 export function Tooltip({
   content,
   children,
   side = "top",
-  delayDuration = 200,
-  withArrow = true,
+  align = "center",
+  delayDuration = 100,
+  withArrow = false,
   className,
 }: TooltipProps) {
   return (
@@ -35,11 +39,14 @@ export function Tooltip({
       <RadixTooltip.Portal>
         <RadixTooltip.Content
           side={side}
+          align={align}
           sideOffset={6}
           className={cx(styles.content, className)}
         >
           {content}
-          {withArrow && <RadixTooltip.Arrow className={styles.arrow} />}
+          {withArrow && (
+            <RadixTooltip.Arrow className={styles.arrow} width={12} height={6} />
+          )}
         </RadixTooltip.Content>
       </RadixTooltip.Portal>
     </RadixTooltip.Root>
