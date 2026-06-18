@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "color-no-hex": true,
+    "property-disallowed-list": [
+      "/^margin-(left|right)$/",
+      "/^padding-(left|right)$/",
+      "/^border-(left|right)($|-)/",
+      "left",
+      "right",
+      "float",
+      "clear"
+    ],
+    "declaration-property-value-disallowed-list": {
+      "text-align": ["/left/", "/right/"]
+    }
+  },
+  "ignoreFiles": [
+    "src/styles/**/*.css",
+    "dist/**/*.css"
+  ]
+}

@@ -1,0 +1,16 @@
+/* TashilUI global entrypoint — import once at your app root.
+ *
+ * Order matters: primitives & scales first, then product theme overrides
+ * (themes are applied via [data-theme="..."], so import the ones you ship).
+ */
+@import "./fonts.css";
+@import "./reference.css";
+@import "./typography.css";
+@import "./measurement.css";
+@import "./reset.css";
+
+/* Product themes — each scoped to [data-theme="<product>"].
+ * Import all, or cherry-pick the products you ship. */
+@import "./themes/tashilpay.css";
+@import "./themes/zamyad.css";
+@import "./themes/zhina.css";

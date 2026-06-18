@@ -1,0 +1,130 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as ButtonStories from "./Button.stories";
+
+<Meta of={ButtonStories} name="Overview" />
+
+# Button
+
+The Button component is a versatile, token-driven control for user interactions. It supports multiple visual intents, styles, and sizes, with first-class RTL support and icon integration.
+
+## When to use
+
+- **Primary actions:** Use `intent="primary"` solid buttons for the main call-to-action on a page or dialog.
+- **Secondary/alternative actions:** Use `intent="secondary"` or `variant="outline"` for supporting actions.
+- **Icon-only buttons:** Use `iconOnly` for compact toolbar buttons with proper accessibility labels.
+- **Loading states:** Set `loading={true}` to show a spinner and prevent interaction during async operations.
+- **Form submission:** Buttons work as native `<button>` elements; use `type="submit"` in forms.
+
+## Intents
+
+The `intent` prop controls the semantic color and visual emphasis. Choose based on action importance:
+
+<Canvas of={ButtonStories.Matrix} />
+
+- **primary:** The default — highest emphasis, use for main actions.
+- **secondary:** Lower emphasis than primary; common for supporting choices.
+- **neutral:** Subtle, works well on light backgrounds.
+- **success:** Indicates a positive outcome (submit, confirm, complete).
+- **error:** Warns of destructive or risky actions (delete, discard).
+
+## Variants (Styles)
+
+The `variant` prop defines the visual treatment. All variants work across all intents.
+
+<Canvas of={ButtonStories.Matrix} />
+
+- **solid:** Filled background with white/oncolor text. Best for primary, success, error intents.
+- **tonal:** Subtle tinted background with intent-colored text. Softer than solid; good for secondary actions.
+- **outline:** White background with neutral border and intent-colored text. Use alongside solid buttons.
+- **ghost:** Transparent with tinted hover state. Best for subtle, low-hierarchy actions.
+- **link:** Text-only button with underline. Behaves like a hyperlink; minimal visual hierarchy.
+
+## Sizes
+
+The `size` prop controls button dimensions and typography:
+
+<Canvas of={ButtonStories.Sizes} />
+
+- **sm (Small):** 32 px block-size; compact controls, dense layouts.
+- **md (Medium):** 40 px block-size; default and recommended.
+- **lg (Large):** 48 px block-size; prominent CTAs, touch targets.
+
+All sizes use semantic tokens for padding, border-radius, font size, and icon dimensions — no hardcoded values.
+
+## Icons
+
+Buttons support leading and trailing icons, plus icon-only mode.
+
+### Leading and trailing icons
+
+Use `leadingIcon` and `trailingIcon` to add icons alongside label text:
+
+<Canvas of={ButtonStories.WithIcons} />
+
+**RTL note:** In right-to-left layouts, `leadingIcon` sits inline-start (visually on the right), and `trailingIcon` sits inline-end (visually on the left). The logical direction ensures correct visual order in all writing systems.
+
+Icons come from the `tashil-ui/icons` package:
+
+```tsx
+import { IconPlus, IconChevronLeft } from "tashil-ui/icons";
+
+<Button leadingIcon={<IconPlus />}>افزودن مورد</Button>
+<Button trailingIcon={<IconChevronLeft />}>بعدی</Button>
+```
+
+### Icon-only buttons
+
+For compact controls without label text, use `iconOnly={true}` and pass the icon as children. Always provide an `aria-label`:
+
+<Canvas of={ButtonStories.IconOnly} />
+
+Icon-only buttons are square across all sizes (sm=32×32, md=40×40, lg=48×48).
+
+## States
+
+### Disabled
+
+Set `disabled={true}` to prevent interaction. The button becomes visually muted and non-interactive:
+
+<Canvas of={ButtonStories.States} />
+
+### Loading
+
+Set `loading={true}` to show a spinner and block user interaction. The label text is hidden (width preserved) and a centered spinner takes its place:
+
+<Canvas of={ButtonStories.Loading} />
+
+Loading state works across all variants and sizes. Use it during async operations (form submission, data fetching) to provide visual feedback.
+
+## Fill width
+
+Set `fill={true}` to stretch the button to fill its container's inline size:
+
+<Canvas of={ButtonStories.FullWidth} />
+
+Useful for full-width form buttons and responsive layouts where buttons should expand to fit their parent.
+
+## Live controls
+
+Use the Playground below to explore all axes interactively:
+
+<Canvas of={ButtonStories.Playground} />
+
+<Controls of={ButtonStories.Playground} />
+
+## Accessibility
+
+- **Semantics:** Renders a native `<button>` element with proper `type` attribute support.
+- **Disabled state:** The `disabled` attribute prevents interaction and is announced to screen readers.
+- **Loading state:** Uses `aria-busy={true}` when loading to indicate async work.
+- **Icon-only buttons:** Always provide an `aria-label` to describe the action.
+- **Icons:** Icon elements are marked `aria-hidden="true"` to avoid redundant announcements.
+- **Focus:** Full keyboard support with visible focus rings (customizable via `--focus-ring-*` tokens).
+
+## Token-driven styling
+
+All colors, sizes, spacing, and motion are driven by semantic design tokens. No hardcoded values appear in the component CSS. This ensures consistency across the design system and allows theme switching without component changes.
+
+## API Reference
+
+<ArgTypes of={ButtonStories.default} />

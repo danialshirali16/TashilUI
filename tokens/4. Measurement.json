@@ -1,0 +1,380 @@
+{
+  "Radius": {
+    "0": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9466",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "2": {
+      "$type": "number",
+      "$value": 2,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9467",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "4": {
+      "$type": "number",
+      "$value": 4,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9468",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "6": {
+      "$type": "number",
+      "$value": 6,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9469",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "8": {
+      "$type": "number",
+      "$value": 8,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9470",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "12": {
+      "$type": "number",
+      "$value": 12,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9471",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "16": {
+      "$type": "number",
+      "$value": 16,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9473",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    },
+    "Full": {
+      "$type": "number",
+      "$value": 999,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9472",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ]
+      }
+    }
+  },
+  "Spacing": {
+    "0": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9474",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "2": {
+      "$type": "number",
+      "$value": 2,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9475",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "4": {
+      "$type": "number",
+      "$value": 4,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9476",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "6": {
+      "$type": "number",
+      "$value": 6,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9479",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "8": {
+      "$type": "number",
+      "$value": 8,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9477",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "10": {
+      "$type": "number",
+      "$value": 10,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9480",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "12": {
+      "$type": "number",
+      "$value": 12,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9478",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "16": {
+      "$type": "number",
+      "$value": 16,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9482",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "18": {
+      "$type": "number",
+      "$value": 18,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9483",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "20": {
+      "$type": "number",
+      "$value": 20,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9484",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "24": {
+      "$type": "number",
+      "$value": 24,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9485",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "28": {
+      "$type": "number",
+      "$value": 28,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9486",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "32": {
+      "$type": "number",
+      "$value": 32,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9487",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "40": {
+      "$type": "number",
+      "$value": 40,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9488",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "48": {
+      "$type": "number",
+      "$value": 48,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9489",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "56": {
+      "$type": "number",
+      "$value": 56,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9491",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    },
+    "64": {
+      "$type": "number",
+      "$value": 64,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:121:9492",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ]
+      }
+    }
+  },
+  "Size": {
+    "Control": {
+      "sm": {
+        "$type": "number",
+        "$value": 32,
+        "$description": "Control height (small) — buttons, fields. PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      },
+      "md": {
+        "$type": "number",
+        "$value": 40,
+        "$description": "Control height (medium). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      },
+      "lg": {
+        "$type": "number",
+        "$value": 48,
+        "$description": "Control height (large). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      }
+    },
+    "Control Min": {
+      "sm": {
+        "$type": "number",
+        "$value": 76,
+        "$description": "Minimum control width (small). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      },
+      "md": {
+        "$type": "number",
+        "$value": 100,
+        "$description": "Minimum control width (medium). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      },
+      "lg": {
+        "$type": "number",
+        "$value": 128,
+        "$description": "Minimum control width (large). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      }
+    },
+    "Icon": {
+      "sm": {
+        "$type": "number",
+        "$value": 16,
+        "$description": "Icon glyph size (small). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      },
+      "md": {
+        "$type": "number",
+        "$value": 20,
+        "$description": "Icon glyph size (medium). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      },
+      "lg": {
+        "$type": "number",
+        "$value": 24,
+        "$description": "Icon glyph size (large). PENDING Figma sync.",
+        "$extensions": { "com.figma.scopes": ["WIDTH_HEIGHT"], "com.tashilui.pendingFigma": true }
+      }
+    }
+  },
+  "Border Width": {
+    "default": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "Default border / divider stroke. PENDING Figma sync.",
+      "$extensions": { "com.figma.scopes": ["STROKE_FLOAT"], "com.tashilui.pendingFigma": true }
+    },
+    "thick": {
+      "$type": "number",
+      "$value": 2,
+      "$description": "Emphasis stroke — focus ring, spinner. PENDING Figma sync.",
+      "$extensions": { "com.figma.scopes": ["STROKE_FLOAT"], "com.tashilui.pendingFigma": true }
+    }
+  },
+  "Focus Ring": {
+    "width": {
+      "$type": "number",
+      "$value": 2,
+      "$description": "Focus outline thickness. PENDING Figma sync.",
+      "$extensions": { "com.figma.scopes": ["STROKE_FLOAT"], "com.tashilui.pendingFigma": true }
+    },
+    "offset": {
+      "$type": "number",
+      "$value": 2,
+      "$description": "Gap between control edge and focus outline. PENDING Figma sync.",
+      "$extensions": { "com.figma.scopes": ["GAP"], "com.tashilui.pendingFigma": true }
+    }
+  },
+  "Duration": {
+    "fast": {
+      "$type": "number",
+      "$value": 120,
+      "$description": "State transition duration, in ms. PENDING Figma sync.",
+      "$extensions": { "com.tashilui.unit": "ms", "com.tashilui.pendingFigma": true }
+    },
+    "slow": {
+      "$type": "number",
+      "$value": 600,
+      "$description": "Looping animation duration (spinner), in ms. PENDING Figma sync.",
+      "$extensions": { "com.tashilui.unit": "ms", "com.tashilui.pendingFigma": true }
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Mode 1"
+  }
+}

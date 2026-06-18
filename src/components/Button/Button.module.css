@@ -1,0 +1,324 @@
+/* Button — mirrors Swiss Army Figma (Button/{Primary,Secondary,Neutral,Success,Error}).
+ * Axes: data-intent × data-variant (Style) × data-size, plus icon-only & states.
+ * Colors are driven by per-(variant,intent) custom properties so the base rules
+ * stay DRY; only semantic tokens are referenced. */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width-default) solid var(--tu-border, transparent);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  background-color: var(--tu-bg, transparent);
+  color: var(--tu-fg);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
+}
+
+.root:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--tu-bg-hover, var(--tu-bg, transparent));
+  color: var(--tu-fg-hover, var(--tu-fg));
+  border-color: var(--tu-border-hover, var(--tu-border, transparent));
+}
+
+.root:active:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--tu-bg-pressed, var(--tu-bg-hover, var(--tu-bg, transparent)));
+  color: var(--tu-fg-hover, var(--tu-fg));
+}
+
+.root:focus-visible {
+  outline: var(--focus-ring-width) solid var(--tu-ring, var(--color-border-primary-default));
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── sizes ─────────────────────────────────────────────── */
+.sm {
+  --tu-icon: var(--size-icon-sm);
+  min-block-size: var(--size-control-sm);
+  min-inline-size: var(--size-control-min-sm);
+  padding-block: var(--space-6);
+  padding-inline: var(--space-12);
+  border-radius: var(--radius-4);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-sm);
+}
+.md {
+  --tu-icon: var(--size-icon-md);
+  min-block-size: var(--size-control-md);
+  min-inline-size: var(--size-control-min-md);
+  padding-block: var(--space-8);
+  padding-inline: var(--space-16);
+  border-radius: var(--radius-6);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+}
+.lg {
+  --tu-icon: var(--size-icon-lg);
+  min-block-size: var(--size-control-lg);
+  min-inline-size: var(--size-control-min-lg);
+  padding-block: var(--space-8);
+  padding-inline: var(--space-16);
+  border-radius: var(--radius-8);
+  font-size: var(--font-size-body-xl);
+  line-height: var(--line-height-body-xl);
+}
+
+.fill { inline-size: 100%; }
+
+/* Icon-only (Figma "Single Icon=Yes"): square, no min-width. */
+.iconOnly {
+  min-inline-size: 0;
+  padding-inline: 0;
+  padding-block: 0;
+}
+.iconOnly.sm { inline-size: var(--size-control-sm); block-size: var(--size-control-sm); }
+.iconOnly.md { inline-size: var(--size-control-md); block-size: var(--size-control-md); }
+.iconOnly.lg { inline-size: var(--size-control-lg); block-size: var(--size-control-lg); }
+
+/* ── content wrapper, icons & spinner ──────────────────── */
+.content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--tu-icon);
+  block-size: var(--tu-icon);
+}
+.icon svg { inline-size: 100%; block-size: 100%; }
+
+.loading { pointer-events: none; }
+
+/* Loading (per Figma): label/icons stay laid out but invisible (width preserved),
+ * spinner centered over the button. */
+.contentHidden { opacity: 0; }
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  inline-size: var(--tu-icon);
+  block-size: var(--tu-icon);
+  border: var(--border-width-thick) solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: var(--radius-full);
+  animation: tu-spin var(--duration-slow) linear infinite;
+}
+@keyframes tu-spin { to { transform: rotate(360deg); } }
+
+/* ── disabled (not while loading — loading keeps the intent color) ── */
+.root:disabled:not(.loading),
+.root[aria-disabled="true"]:not(.loading) {
+  cursor: not-allowed;
+  color: var(--color-text-disable);
+}
+.solid:disabled:not(.loading), .solid[aria-disabled="true"]:not(.loading),
+.tonal:disabled:not(.loading), .tonal[aria-disabled="true"]:not(.loading) {
+  background-color: var(--color-background-disable);
+  border-color: transparent;
+}
+.outline:disabled:not(.loading), .outline[aria-disabled="true"]:not(.loading) {
+  background-color: transparent;
+  border-color: var(--color-border-disable);
+}
+.ghost:disabled:not(.loading), .ghost[aria-disabled="true"]:not(.loading),
+.link:disabled:not(.loading), .link[aria-disabled="true"]:not(.loading) {
+  background-color: transparent;
+}
+
+/* Loading stays non-interactive but visually keeps its variant color. */
+.loading { cursor: default; }
+
+/* ════════════════════════════════════════════════════════
+ * SOLID — filled, white (oncolor) label
+ * ════════════════════════════════════════════════════════ */
+.solid { --tu-fg: var(--color-text-oncolor-default); }
+.solid.primary {
+  --tu-bg: var(--color-background-primary-default);
+  --tu-bg-hover: var(--color-background-primary-hover);
+  --tu-bg-pressed: var(--color-background-primary-pressed);
+  --tu-ring: var(--color-border-primary-default);
+}
+.solid.secondary {
+  --tu-bg: var(--color-background-secondary-default);
+  --tu-bg-hover: var(--color-background-secondary-hover);
+  --tu-bg-pressed: var(--color-background-secondary-pressed);
+  --tu-ring: var(--color-border-secondary-default);
+}
+.solid.neutral {
+  --tu-bg: var(--color-background-neutral-dark-default);
+  --tu-bg-hover: var(--color-background-neutral-dark-hover);
+  --tu-bg-pressed: var(--color-background-neutral-dark-pressed);
+  --tu-ring: var(--color-border-neutral-default);
+}
+.solid.success {
+  --tu-bg: var(--color-background-success-bold-default);
+  --tu-bg-hover: var(--color-background-success-bold-hover);
+  --tu-bg-pressed: var(--color-background-success-bold-pressed);
+  --tu-ring: var(--color-border-success-default);
+}
+.solid.error {
+  --tu-bg: var(--color-background-error-bold-default);
+  --tu-bg-hover: var(--color-background-error-bold-hover);
+  --tu-bg-pressed: var(--color-background-error-bold-pressed);
+  --tu-ring: var(--color-border-error-default);
+}
+
+/* ════════════════════════════════════════════════════════
+ * TONAL — subtle tinted fill, intent-colored label
+ * ════════════════════════════════════════════════════════ */
+.tonal.primary {
+  --tu-bg: var(--color-background-primary-subtle-default);
+  --tu-bg-hover: var(--color-background-primary-subtle-hover);
+  --tu-bg-pressed: var(--color-background-primary-subtle-pressed);
+  --tu-fg: var(--color-icon-primary-bold);
+  --tu-fg-hover: var(--color-icon-primary-hover);
+  --tu-ring: var(--color-border-primary-default);
+}
+.tonal.secondary {
+  --tu-bg: var(--color-background-secondary-subtle-default);
+  --tu-bg-hover: var(--color-background-secondary-subtle-hover);
+  --tu-bg-pressed: var(--color-background-secondary-subtle-pressed);
+  --tu-fg: var(--color-icon-secondary-bold);
+  --tu-fg-hover: var(--color-icon-secondary-hover);
+  --tu-ring: var(--color-border-secondary-default);
+}
+.tonal.neutral {
+  --tu-bg: var(--color-background-neutral-default);
+  --tu-bg-hover: var(--color-background-neutral-hover);
+  --tu-bg-pressed: var(--color-background-neutral-pressed);
+  --tu-fg: var(--color-icon-default);
+  --tu-ring: var(--color-border-neutral-default);
+}
+.tonal.success {
+  --tu-bg: var(--color-background-success-subtle-default);
+  --tu-bg-hover: var(--color-background-success-subtle-hover);
+  --tu-bg-pressed: var(--color-background-success-subtle-pressed);
+  --tu-fg: var(--color-icon-success-bold);
+  --tu-fg-hover: var(--color-icon-success-hover);
+  --tu-ring: var(--color-border-success-default);
+}
+.tonal.error {
+  --tu-bg: var(--color-background-error-subtle-default);
+  --tu-bg-hover: var(--color-background-error-subtle-hover);
+  --tu-bg-pressed: var(--color-background-error-subtle-pressed);
+  --tu-fg: var(--color-icon-error-bold);
+  --tu-fg-hover: var(--color-icon-error-hover);
+  --tu-ring: var(--color-border-error-default);
+}
+
+/* ════════════════════════════════════════════════════════
+ * OUTLINE — white fill, neutral gray border (border/default),
+ * intent-colored label. (Border is NOT the intent color — per Figma.)
+ * ════════════════════════════════════════════════════════ */
+.outline {
+  --tu-bg: var(--color-background-neutral-zero-default);
+  --tu-border: var(--color-border-default);
+}
+.outline.primary {
+  --tu-bg-hover: var(--color-background-primary-transparent-hover);
+  --tu-bg-pressed: var(--color-background-primary-transparent-pressed);
+  --tu-fg: var(--color-icon-primary-default);
+  --tu-fg-hover: var(--color-icon-primary-hover);
+  --tu-ring: var(--color-border-primary-default);
+}
+.outline.secondary {
+  --tu-bg-hover: var(--color-background-secondary-transparent-hover);
+  --tu-bg-pressed: var(--color-background-secondary-transparent-pressed);
+  --tu-fg: var(--color-icon-secondary-default);
+  --tu-fg-hover: var(--color-icon-secondary-hover);
+  --tu-ring: var(--color-border-secondary-default);
+}
+.outline.neutral {
+  --tu-bg-hover: var(--color-background-neutral-transparent-hover);
+  --tu-bg-pressed: var(--color-background-neutral-transparent-pressed);
+  --tu-fg: var(--color-icon-default);
+  --tu-ring: var(--color-border-neutral-default);
+}
+.outline.success {
+  --tu-bg-hover: var(--color-background-success-transparent-hover);
+  --tu-bg-pressed: var(--color-background-success-transparent-pressed);
+  --tu-fg: var(--color-icon-success-default);
+  --tu-fg-hover: var(--color-icon-success-hover);
+  --tu-ring: var(--color-border-success-default);
+}
+.outline.error {
+  --tu-bg-hover: var(--color-background-error-transparent-hover);
+  --tu-bg-pressed: var(--color-background-error-transparent-pressed);
+  --tu-fg: var(--color-icon-error-default);
+  --tu-fg-hover: var(--color-icon-error-hover);
+  --tu-ring: var(--color-border-error-default);
+}
+
+/* ════════════════════════════════════════════════════════
+ * GHOST — transparent, intent-colored label, tint on hover
+ * ════════════════════════════════════════════════════════ */
+.ghost.primary {
+  --tu-bg: var(--color-background-primary-transparent-default);
+  --tu-bg-hover: var(--color-background-primary-transparent-hover);
+  --tu-bg-pressed: var(--color-background-primary-transparent-pressed);
+  --tu-fg: var(--color-icon-primary-default);
+  --tu-fg-hover: var(--color-icon-primary-hover);
+  --tu-ring: var(--color-border-primary-default);
+}
+.ghost.secondary {
+  --tu-bg: var(--color-background-secondary-transparent-default);
+  --tu-bg-hover: var(--color-background-secondary-transparent-hover);
+  --tu-bg-pressed: var(--color-background-secondary-transparent-pressed);
+  --tu-fg: var(--color-icon-secondary-default);
+  --tu-fg-hover: var(--color-icon-secondary-hover);
+  --tu-ring: var(--color-border-secondary-default);
+}
+.ghost.neutral {
+  --tu-bg: var(--color-background-neutral-transparent-default);
+  --tu-bg-hover: var(--color-background-neutral-transparent-hover);
+  --tu-bg-pressed: var(--color-background-neutral-transparent-pressed);
+  --tu-fg: var(--color-icon-default);
+  --tu-ring: var(--color-border-neutral-default);
+}
+.ghost.success {
+  --tu-bg: var(--color-background-success-transparent-default);
+  --tu-bg-hover: var(--color-background-success-transparent-hover);
+  --tu-bg-pressed: var(--color-background-success-transparent-pressed);
+  --tu-fg: var(--color-icon-success-default);
+  --tu-fg-hover: var(--color-icon-success-hover);
+  --tu-ring: var(--color-border-success-default);
+}
+.ghost.error {
+  --tu-bg: var(--color-background-error-transparent-default);
+  --tu-bg-hover: var(--color-background-error-transparent-hover);
+  --tu-bg-pressed: var(--color-background-error-transparent-pressed);
+  --tu-fg: var(--color-icon-error-default);
+  --tu-fg-hover: var(--color-icon-error-hover);
+  --tu-ring: var(--color-border-error-default);
+}
+
+/* ════════════════════════════════════════════════════════
+ * LINK — text only: no fill, no padding, underline
+ * ════════════════════════════════════════════════════════ */
+.link {
+  min-inline-size: 0;
+  min-block-size: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: var(--space-2);
+}
+.link.primary { --tu-fg: var(--color-link-primary-default); --tu-fg-hover: var(--color-link-primary-hover); --tu-ring: var(--color-border-primary-default); }
+.link.secondary { --tu-fg: var(--color-link-secondary-default); --tu-fg-hover: var(--color-link-secondary-hover); --tu-ring: var(--color-border-secondary-default); }
+.link.neutral { --tu-fg: var(--color-link-neutral-default); --tu-fg-hover: var(--color-link-neutral-hover); --tu-ring: var(--color-border-neutral-default); }
+.link.success { --tu-fg: var(--color-link-success-default); --tu-fg-hover: var(--color-link-success-hover); --tu-ring: var(--color-border-success-default); }
+.link.error { --tu-fg: var(--color-link-error-default); --tu-fg-hover: var(--color-link-error-hover); --tu-ring: var(--color-border-error-default); }

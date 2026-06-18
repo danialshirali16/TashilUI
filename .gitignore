@@ -1,0 +1,18 @@
+node_modules
+dist
+storybook-static
+*.log
+.DS_Store
+.vite
+
+# Generated token CSS — produced by `pnpm run tokens`, never hand-edited.
+src/styles/reference.css
+src/styles/typography.css
+src/styles/measurement.css
+src/styles/themes/tashilpay.css
+src/styles/themes/zamyad.css
+src/styles/themes/zhina.css
+
+# Generated icon components — produced by `pnpm run icons` from src/icons/svg/.
+src/icons/Icon*.tsx
+src/icons/index.ts
