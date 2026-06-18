@@ -45,20 +45,107 @@ Shared: `index` 0.33 kB, `persian` 0.41 kB, `cx` 0.12 kB (gzip).
 | Overlays/feedback | Modal ✅, Dialogbox, ScrimBG, Tooltip ✅, Progress, StepperCircle | `react-dialog`, `-tooltip`, `-progress` |
 | Navigation/layout | Tabs, Pages (pagination), Scrollbar | `react-tabs`, `-scroll-area`; Pages custom |
 
-## Milestones
+## Build order & per-component workflow
 
-- [~] **M1 (current):** foundations + tokens + Button, TextField, Checkbox, Modal, Tooltip.
-- [ ] **M2:** remaining Buttons (Secondary/Neutral/Success/Error ship as `Button` variants;
-      confirm against specs) + ActionIcon; all text inputs incl. PlateField (license plate)
-      and OTP.
-- [ ] **M3:** Selection group (CheckboxGroup, RadioButton, RadioGroup, Switch) +
-      Dropdowns/Menus + Tabs / Pages / Scrollbar.
-- [ ] **M4:** Overlays/feedback — Dialogbox, ScrimBG (extract from Modal), Progress,
-      StepperCircle.
-- [ ] **M5:** Uploaders + **Calendar/DatePicker (Jalali + RTL)** — highest risk, budget
-      extra time.
-- [ ] **M6:** Per-product UI-Kit packages (Zhina tables/cards `db.*`, TashilPay payment
-      cards `up.*`) on top of core; add Peykan theme when its tokens are created.
+Build components **in the order below** — all of **Swiss Army** first, then **Zhina**.
+Zhina composites build _on top of_ finished Swiss Army primitives, so Swiss Army must
+come first.
+
+### Per-component Definition of Done
+
+A component is only "done" once it has been **built** (its `.tsx` + `.module.css` + `index.ts`,
+exported from `src/index.ts`, semantic tokens + logical CSS only, Radix only where needed) and
+then passed **all three** steps, in order:
+
+1. **Review & polish against Figma.** Open the component's Figma source (`figma_key` in the
+   docs catalog — Swiss Army: `design-system/components/_index.md`; Zhina:
+   `ui-kits/zhina-kit.md`), compare it to the built component, and polish until it matches.
+   **Then ask the user whether they see any visual difference** — do not sign the component
+   off until they confirm it matches.
+2. **Add it to Storybook.** Stories covering every state × the 3 product themes × RTL/LTR,
+   plus `play`-function interaction tests (a11y addon clean).
+3. **Write its Overview.** An `Overview` MDX docs page in Storybook (the pattern in
+   `Button.mdx` → `Components/<Name> ▸ Overview`).
+
+> Tip: `pnpm storybook` exposes the Storybook **MCP** — call `get-documentation` /
+> `get-storybook-story-instructions` to keep stories + Overview consistent with the rest.
+
+### Part A — Swiss Army (do first)
+
+**Done (M1):**
+- [x] **Button** — built, Figma-reviewed, stories + interaction tests, Overview. ✅ fully done
+- [~] **TextField** — built + stories. _Needs: Figma review, Overview._
+- [~] **Checkbox** — built + stories. _Needs: Figma review, Overview._
+- [~] **Modal** — built + stories. _Needs: Figma review, Overview._
+- [~] **Tooltip** — built + stories. _Needs: Figma review, Overview._
+
+**To build, in order:**
+1. [ ] ActionIcon
+2. [ ] Switch
+3. [ ] RadioButton
+4. [ ] RadioGroup
+5. [ ] CheckboxGroup
+6. [ ] TextFieldSmall
+7. [ ] TextArea
+8. [ ] NumberField
+9. [ ] SearchField
+10. [ ] Chips
+11. [ ] OTP _(needs care — per-cell focus management)_
+12. [ ] PlateField _(Iranian license plate — domain-specific)_
+13. [ ] Progress
+14. [ ] ScrimBG _(extract from Modal)_
+15. [ ] Dialogbox
+16. [ ] StepperCircle
+17. [ ] Tabs
+18. [ ] Pages _(pagination)_
+19. [ ] Scrollbar
+20. [ ] DropMenu
+21. [ ] Menu
+22. [ ] Calendar _(Jalali + RTL — highest risk; budget extra time)_
+23. [ ] DatePicker _(Desktop + Mobile; depends on Calendar)_
+24. [ ] SingleUploader
+25. [ ] MultipleUploader
+26. [ ] BoxUploader
+
+### Part B — Zhina components (`db.*`, after Swiss Army)
+
+Admin composites for [Zhina](../Tashilcar/products/zhina.md), built on Swiss Army. Figma
+file `4PfDNeqwsSF36NJ17qkXsb` (see `ui-kits/zhina-kit.md`). Same 3-step DoD each.
+
+**Table system (core — build first):**
+1. [ ] Template/Table _(+ Header/Table columns, domain status cells)_
+2. [ ] db.Table Columns
+3. [ ] db.Table Pagination _(+ PerPage, Footer)_
+4. [ ] In-line Action + db.BulkAction
+5. [ ] db.TableStatics
+
+**Layout & shell:**
+6. [ ] db.Sidebar
+7. [ ] Layout/Pages
+8. [ ] Layout/Filter
+9. [ ] Layout/Steps
+10. [ ] Layout Action / View Button / Empty Icon
+
+**Cards (dashboard):**
+11. [ ] db.Order Status Card
+12. [ ] db.OrdersSection Card
+13. [ ] db.Loan Type Card
+14. [ ] db.Statics Card / Report Cards
+15. [ ] db.DocumentCard
+16. [ ] db.Empty State Card
+17. [ ] Terminal Card
+
+**Permissions & roles:**
+18. [ ] Role Card
+19. [ ] Permission Cards (+ Title, List)
+20. [ ] Permission List / Roles Permission List / Permission Footer
+
+**Tickets & content:**
+21. [ ] db.TicketCard (+ Ticket Status, message-card)
+22. [ ] db.TextEditor
+23. [ ] db.RoadMap
+
+> After Zhina: TashilPay UI-kit (`up.*`) and the Peykan theme — scoped later.
 
 ## Icon library ✅ landed (340 icons)
 
@@ -85,8 +172,8 @@ Remaining:
       whether these are distinct icons or accidental dupes from the Figma export.
 
 ## Open decisions to confirm with the team
-- Repo hosting + how it consumes tokens (vendored copy via a `sync-tokens` script vs git
-  submodule of the docs repo).
+- ~~Token source of truth~~ — done: **TashilUI is the source of truth**; tokens authored in
+  `tokens/` flow out to the docs repo via `pnpm sync-docs` (PR), enforced by a drift CI there.
 - ~~Yekan Bakh font hosting~~ — done: bundled as woff2 (Medium/Bold/Heavy) in
   `src/styles/fonts/`, shipped via `dist/styles`. (Confirm redistribution licensing.)
 - Jalali date engine for Calendar/DatePicker.
