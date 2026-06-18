@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent } from "storybook/test";
+import { IconChevronLeft, IconPlus } from "../../icons";
 import { Button } from "./Button";
 import type { ButtonIntent, ButtonVariant } from "./Button";
 
@@ -76,22 +77,11 @@ export const Sizes: Story = {
   ),
 };
 
-const Chevron = () => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-const Plus = () => (
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
 export const WithIcons: Story = {
   render: (args) => (
     <div style={{ display: "flex", gap: 12 }}>
-      <Button {...args} leadingIcon={<Plus />}>افزودن</Button>
-      <Button {...args} trailingIcon={<Chevron />}>ادامه</Button>
+      <Button {...args} leadingIcon={<IconPlus />}>افزودن</Button>
+      <Button {...args} trailingIcon={<IconChevronLeft />}>ادامه</Button>
     </div>
   ),
 };
@@ -100,9 +90,9 @@ export const IconOnly: Story = {
   args: { iconOnly: true, "aria-label": "افزودن" },
   render: (args) => (
     <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-      <Button {...args} size="sm"><Plus /></Button>
-      <Button {...args} size="md"><Plus /></Button>
-      <Button {...args} size="lg"><Plus /></Button>
+      <Button {...args} size="sm"><IconPlus /></Button>
+      <Button {...args} size="md"><IconPlus /></Button>
+      <Button {...args} size="lg"><IconPlus /></Button>
     </div>
   ),
 };
@@ -128,7 +118,7 @@ export const Loading: Story = {
       <Button {...args} variant="tonal">تونال</Button>
       <Button {...args} variant="outline">اوت‌لاین</Button>
       <Button {...args} iconOnly aria-label="در حال بارگذاری">
-        <Plus />
+        <IconPlus />
       </Button>
     </div>
   ),
