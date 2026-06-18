@@ -59,7 +59,7 @@ design reference**:
 7. **Verify before done:** `pnpm tokens && pnpm typecheck && pnpm build && pnpm lint:css`
    all green; component renders correctly in Storybook across themes + directions.
 
-## The 6-step component build pattern
+## The 5-step component build pattern
 
 1. Read the spec doc in `../Tashilcar/design-system/components/<name>.md` (variants,
    anatomy, **Tokens used**, RTL notes) — and grep `src/styles/themes/*.css` for the exact
@@ -68,9 +68,7 @@ design reference**:
 3. Build `.module.css` with semantic tokens + logical props; map Radix `[data-state]` /
    `[data-disabled]` attributes to styles.
 4. Type the props to the documented variant axes (size / state / content / width).
-5. Write stories for every state × theme × direction.
-6. Add a `code-connect/<Component>.figma.ts` mapping keyed by the doc's `figma_key`, and
-   mirror it back into `../Tashilcar/design-system/code-connect/` (update its `_index.md`).
+5. Write stories for every state × theme × direction (incl. `play`-function tests).
 
 ## Button API (matches Figma Swiss Army)
 

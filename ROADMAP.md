@@ -32,11 +32,6 @@ Tailwind/MUI/shadcn). Working rules are in [AGENTS.md](AGENTS.md).
 
 Shared: `index` 0.33 kB, `persian` 0.41 kB, `cx` 0.12 kB (gzip).
 
-**Carried into M2**
-- [ ] First Code Connect mapping (`Button/Primary`, figma_key
-      `d120315d84467531a8ed303c2c07116cdf635d56`) wired + mirrored to the docs repo.
-      (Deferred — needs the Figma file key / Code Connect tooling.)
-
 ## Radix base per component group (install per-component, tree-shakeable)
 
 | Group | Components | Radix base |
