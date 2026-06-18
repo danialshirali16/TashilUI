@@ -1,0 +1,14 @@
+/* Overview (MDX docs) pages: the prose is written in English, so read it
+ * left-to-right — even though the preview defaults the document to RTL. The
+ * rendered component previews are restored to RTL so the components still
+ * demonstrate their real (Persian/RTL) direction. */
+.sbdocs-content {
+  direction: ltr;
+  text-align: left;
+}
+
+/* keep the actual rendered stories/components in their document direction */
+.sbdocs-content .docs-story {
+  direction: rtl;
+  text-align: start;
+}

@@ -2,6 +2,7 @@ import type { Decorator, Preview } from "@storybook/react-vite";
 import { useEffect } from "react";
 import { TooltipProvider } from "../src/components/Tooltip";
 import "../src/styles/global.css";
+import "./docs.css";
 
 /** Apply theme + direction to <html> so portalled content (Modal/Tooltip) inherits them. */
 const withThemeAndDir: Decorator = (Story, context) => {
