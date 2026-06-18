@@ -163,13 +163,21 @@ The official set is in. Pipeline built (`scripts/build-icons.mjs`, `pnpm icons`)
 - Verified: typecheck, lint:css, build (340 chunks in `dist/icons/`), live render shows
   fills following the `--color-icon-*` cascade and sizes tracking `font-size`.
 
-Remaining:
-- [ ] Wire icons into components that take them (`Button` leadingIcon/trailingIcon/iconOnly,
-      fields). Today consumers pass e.g. `leadingIcon={<IconUser />}` — works already.
-- [ ] Decide long-term: keep icons in-repo vs a separate `@tashil/icons` package.
-- [ ] Source-name cleanup (optional): camelCase outliers `interestRate`, `backToUpArrow`;
-      the `-1` duplicates (`Square-1`, `SwitchHorizontal-1`, `HelpShield-1`) — confirm
-      whether these are distinct icons or accidental dupes from the Figma export.
+Status / decisions:
+- [x] **Wired into components** — the icon API is set-agnostic: `Button` (and future fields)
+      take any `ReactNode` via `leadingIcon` / `trailingIcon` / children
+      (`leadingIcon={<IconPlus />}`), and the Button stories use the real set. Nothing is
+      hardcoded to a specific icon, so there's nothing left to wire.
+- [x] **Keep in-repo** (decided) — icons live in this repo while it's the only consumer.
+      Revisit a separate `@tashil/icons` package only when a second app needs them.
+- [x] **`-1` names are distinct icons, not dupes** — verified by diffing the SVGs
+      (`Square` ≠ `Square-1`, `SwitchHorizontal` ≠ `SwitchHorizontal-1`,
+      `HelpShield` ≠ `HelpShield-1`). Keep both.
+
+Optional, low priority (needs design input — no functional impact):
+- [ ] Rename the non-descriptive sources for clearer exports: `Square-1` / `SwitchHorizontal-1`
+      / `HelpShield-1` (→ `IconSquare1`…) and the camelCase `interestRate`, `backToUpArrow`.
+      Drop the new SVG in `src/icons/svg/` under the agreed name and rebuild.
 
 ## Open decisions to confirm with the team
 - ~~Token source of truth~~ — done: **TashilUI is the source of truth**; tokens authored in
