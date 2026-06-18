@@ -8,8 +8,13 @@ export interface CheckboxGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "title"> {
   /** Group title (Figma `Title`). */
   title?: ReactNode;
-  /** Item layout: stacked (`vertical`) or wrapping row (`horizontal`). */
-  orientation?: "vertical" | "horizontal";
+  /**
+   * Layout (Figma `Type`):
+   * - `vertical` — title above, items stacked.
+   * - `input` — title above, items in a wrapping row.
+   * - `inline` — title and items on one line.
+   */
+  type?: "vertical" | "input" | "inline";
   /** Helper / error message shown below the group (rendered when `error`). */
   message?: ReactNode;
   /** Error status — propagated to every child + red message. */
@@ -24,10 +29,13 @@ export interface CheckboxGroupProps
  * A labelled group of `Checkbox`es (Swiss Army Figma `CheckboxGroup`). The group
  * status (`error` / `disabled` / `readOnly`) is propagated to each child — set it
  * on the group, not on every box. Child-level props still win.
+ *
+ * Pass `Checkbox` elements as direct children (not wrapped in another component),
+ * so the group can inject status into each one.
  */
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
   function CheckboxGroup(
-    { title, orientation = "vertical", message, error, disabled, readOnly, className, children, ...rest },
+    { title, type = "vertical", message, error, disabled, readOnly, className, children, ...rest },
     ref,
   ) {
     const titleId = useId();
@@ -42,6 +50,17 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       });
     });
 
+    const titleEl =
+      title != null ? (
+        <span id={titleId} className={styles.title}>
+          {title}
+        </span>
+      ) : null;
+
+    const itemsEl = (
+      <div className={cx(styles.items, type !== "vertical" && styles.row)}>{items}</div>
+    );
+
     return (
       <div
         ref={ref}
@@ -53,14 +72,17 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
         className={cx(styles.group, className)}
         {...rest}
       >
-        {title != null && (
-          <span id={titleId} className={styles.title}>
-            {title}
-          </span>
+        {type === "inline" ? (
+          <div className={styles.inlineRow}>
+            {titleEl}
+            {itemsEl}
+          </div>
+        ) : (
+          <>
+            {titleEl}
+            {itemsEl}
+          </>
         )}
-        <div className={cx(styles.items, orientation === "horizontal" && styles.horizontal)}>
-          {items}
-        </div>
         {error && message != null && (
           <p id={messageId} className={styles.message} role="alert">
             {message}

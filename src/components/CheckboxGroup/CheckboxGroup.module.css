@@ -1,6 +1,6 @@
 /* CheckboxGroup — mirrors Swiss Army Figma `CheckboxGroup`.
- * Title + a vertical/horizontal set of Checkboxes + an optional error message.
- * Status (error/disabled/read-only) is applied per child in the component. */
+ * Title + a set of Checkboxes (vertical / input / inline) + an optional error
+ * message. Status (error/disabled/read-only) is applied per child in the TS. */
 
 .group {
   display: flex;
@@ -27,11 +27,23 @@
   flex-direction: column;
   gap: var(--space-12);
 }
-.items.horizontal {
+/* `input` + `inline` lay the boxes out in a wrapping row */
+.items.row {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-16);
+}
+
+/* `inline` puts the title and the items on one line */
+.inlineRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+}
+.inlineRow .items.row {
+  flex: 1 1 auto;
 }
 
 .message {
