@@ -16,6 +16,8 @@ export interface TooltipProps {
   delayDuration?: number;
   /** Render the small pointer arrow (Figma: optional, off by default). @default false */
   withArrow?: boolean;
+  /** Minimum distance kept from the viewport edges, in px. @default 8 */
+  collisionPadding?: RadixTooltip.TooltipContentProps["collisionPadding"];
   className?: string;
 }
 
@@ -31,6 +33,7 @@ export function Tooltip({
   align = "center",
   delayDuration = 100,
   withArrow = false,
+  collisionPadding = 8,
   className,
 }: TooltipProps) {
   return (
@@ -41,6 +44,7 @@ export function Tooltip({
           side={side}
           align={align}
           sideOffset={6}
+          collisionPadding={collisionPadding}
           className={cx(styles.content, className)}
         >
           {content}
