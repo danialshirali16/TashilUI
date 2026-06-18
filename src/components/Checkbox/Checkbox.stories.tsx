@@ -38,3 +38,65 @@ export const Indeterminate: Story = {
 };
 
 export const WithoutLabel: Story = { args: { label: undefined } };
+
+export const Error: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Checkbox {...args} error label="یک گزینه را انتخاب کنید" />
+      <Checkbox {...args} error defaultChecked label="انتخاب‌شده (خطا)" />
+      <Checkbox {...args} error checked="indeterminate" label="نیمه‌انتخاب (خطا)" />
+    </div>
+  ),
+};
+
+export const ReadOnly: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Checkbox {...args} readOnly label="فقط‌خواندنی" />
+      <Checkbox {...args} readOnly defaultChecked label="فقط‌خواندنی و انتخاب‌شده" />
+    </div>
+  ),
+};
+
+/** Full matrix: status (rows) × fill state (columns). */
+export const Matrix: Story = {
+  render: () => {
+    const STATUS = [
+      { name: "Default", props: {} },
+      { name: "Error", props: { error: true } },
+      { name: "Read-Only", props: { readOnly: true } },
+      { name: "Disabled", props: { disabled: true } },
+    ] as const;
+    const FILL = [
+      { name: "Unselected", value: false as const },
+      { name: "Selected", value: true as const },
+      { name: "Indeterminate", value: "indeterminate" as const },
+    ];
+    return (
+      <table style={{ borderCollapse: "separate", borderSpacing: 20 }}>
+        <thead>
+          <tr>
+            <th />
+            {FILL.map((f) => (
+              <th key={f.name} style={{ font: "inherit", color: "var(--color-text-subtle)", textAlign: "start" }}>
+                {f.name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {STATUS.map((s) => (
+            <tr key={s.name}>
+              <td style={{ color: "var(--color-text-subtle)" }}>{s.name}</td>
+              {FILL.map((f) => (
+                <td key={f.name}>
+                  <Checkbox {...s.props} checked={f.value} label="گزینه انتخابی" />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  },
+};
