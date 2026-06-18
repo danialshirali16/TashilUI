@@ -29,7 +29,7 @@
     "./styles/themes/zhina.css": "./dist/styles/themes/zhina.css"
   },
   "scripts": {
-    "sync-tokens": "node scripts/sync-tokens.mjs",
+    "sync-docs": "node scripts/sync-docs.mjs",
     "tokens": "node scripts/build-tokens.mjs",
     "icons": "node scripts/build-icons.mjs",
     "build": "pnpm run tokens && pnpm run icons && vite build && node scripts/copy-styles.mjs",
