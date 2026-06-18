@@ -48,10 +48,17 @@ if (gitDocs(["status", "--porcelain", "--untracked-files=no"])) {
 
 const sourceSha = run("git", ["rev-parse", "--short", "HEAD"], repoRoot);
 
-// Determine the docs default branch (fall back to main).
+// Determine the docs default branch (fall back to main). Swallow stderr — when
+// origin/HEAD isn't set locally git prints a scary-looking (harmless) message.
 let baseBranch = "main";
 try {
-  baseBranch = gitDocs(["rev-parse", "--abbrev-ref", "origin/HEAD"]).replace(/^origin\//, "");
+  baseBranch = execFileSync("git", ["rev-parse", "--abbrev-ref", "origin/HEAD"], {
+    cwd: docsRepo,
+    encoding: "utf8",
+    stdio: ["pipe", "pipe", "ignore"],
+  })
+    .trim()
+    .replace(/^origin\//, "");
 } catch {
   /* origin/HEAD not set locally — keep default */
 }
