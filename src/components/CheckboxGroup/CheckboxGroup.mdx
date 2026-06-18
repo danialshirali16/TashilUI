@@ -1,0 +1,89 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as CheckboxGroupStories from "./CheckboxGroup.stories";
+
+<Meta of={CheckboxGroupStories} name="Overview" />
+
+# CheckboxGroup
+
+A labelled set of related **Checkbox**es with a shared title, layout, status, and error
+message. Use it for a single question with several independent answers (e.g. «جنسیت», a list
+of filters, a permissions set). For one standalone toggle, use **Checkbox** directly.
+
+## Anatomy
+
+A `title` (group label) + the Checkboxes + an optional error `message`. The group status —
+`error`, `disabled`, `readOnly` — is set **once on the group** and propagated to every child.
+
+<Canvas of={CheckboxGroupStories.Vertical} />
+
+> **Children must be `Checkbox` elements directly** (not wrapped in another component), so the
+> group can inject status into each one:
+>
+> ```tsx
+> <CheckboxGroup title="جنسیت" error message="یک گزینه را انتخاب کنید">
+>   <Checkbox label="گزینه اول" />
+>   <Checkbox label="گزینه دوم" />
+> </CheckboxGroup>
+> ```
+
+## Layout (`type`)
+
+Three layouts mirror the Figma `Type` axis:
+
+- **vertical** — title above, boxes stacked. The default; best for most forms.
+- **input** — title above, boxes in a wrapping row. For a few short options on one line.
+- **inline** — title and boxes on a single line. Compact, for toolbars / filter bars.
+
+<Canvas of={CheckboxGroupStories.Input} />
+<Canvas of={CheckboxGroupStories.Inline} />
+
+## Status
+
+Set the status on the group; every child follows.
+
+### Error
+
+`error` turns each box to the error ramp and renders `message` below in red. The group gets
+`aria-invalid` and is described by the message.
+
+<Canvas of={CheckboxGroupStories.Error} />
+
+### Disabled
+
+Disables every checkbox in the group and mutes the title.
+
+<Canvas of={CheckboxGroupStories.Disabled} />
+
+### Read-only
+
+Shows the values without allowing edits (boxes muted, removed from tab order).
+
+<Canvas of={CheckboxGroupStories.ReadOnly} />
+
+## Dynamic options
+
+The group accepts any number of children, so options can be added or removed at runtime. The
+example below is bounded to **1–10** (the parent owns the count; the group just renders what
+it's given).
+
+<Canvas of={CheckboxGroupStories.Dynamic} />
+
+## Accessibility
+
+- **Grouping** — renders `role="group"` with `aria-labelledby` pointing at the title, so
+  assistive tech announces the options as one labelled set.
+- **Error** — `aria-invalid` on the group + `aria-describedby` to the `role="alert"` message.
+- **Status propagation** — each child Checkbox keeps its own Radix semantics (`Space` toggles,
+  `aria-checked`, focus ring); the group only injects the shared status.
+
+## Token-driven styling
+
+Title uses `text/subtler`, the error message `text/error/default` at the caption scale, and
+the gaps are `--space-12` (vertical) / `--space-16` (rows) — all semantic tokens, so themes
+switch with no component changes.
+
+## API reference
+
+<Controls of={CheckboxGroupStories.Vertical} />
+
+<ArgTypes of={CheckboxGroupStories.default} />
