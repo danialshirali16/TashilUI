@@ -15,11 +15,17 @@ system. Deliberately built **without Tailwind, MUI, or shadcn/ui**.
   browser**. Prefer pure-CSS components; pull Radix in per-component (tree-shakeable) only
   when accessibility/interaction demands it.
 
-**Source of truth for design** lives in the docs repo
-`../Tashilcar/design-system/` (sibling checkout):
-- `tokens-source/*.json` — the W3C/Figma token exports (vendored into `tokens/`).
+**TashilUI is the design-token source of truth.** Tokens are authored here in
+`tokens/*.json` (W3C/DTCG). Changes flow OUT to the docs repo — never the reverse:
+run `pnpm sync-docs` to copy `tokens/` → `tashilcar-docs/design-system/tokens-source/`
+and open a review PR (via `gh`). A drift-check CI in tashilcar-docs fails if its
+tokens fall behind this repo. **Do not** pull tokens back from docs.
+
+The docs repo `../Tashilcar/design-system/` (sibling checkout) is the **consumer +
+design reference**:
 - `components/*.md` — the 33 component specs (variants, anatomy, tokens used, RTL notes).
 - `foundations.md`, `tokens*.md` — RTL/Persian/Jalali/Yekan Bakh + token architecture.
+- `tokens-source/*.json` — a synced mirror of this repo's `tokens/` (kept current by `sync-docs`).
 
 ## Rules every agent MUST follow
 
@@ -134,6 +140,7 @@ are running (approve the project server once). Tools: `list-all-documentation`,
 ```bash
 pnpm install                          # deps (see workspace note below)
 pnpm tokens                           # regenerate token CSS from tokens/*.json
+pnpm sync-docs                        # push token changes → tashilcar-docs as a review PR (gh)
 pnpm icons                            # regenerate icon components from src/icons/svg/*.svg
 pnpm storybook                        # dev Storybook on :6006
 pnpm typecheck                        # tsc --noEmit
