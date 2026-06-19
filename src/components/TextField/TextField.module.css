@@ -159,7 +159,7 @@
 /* ── message ──────────────────────────────────────────────── */
 .message {
   margin: 0;
-  padding-inline: var(--space-4);
+  padding-inline: var(--space-16);
   font-size: var(--font-size-caption-md);
   line-height: var(--line-height-caption-md);
   color: var(--color-text-subtler);

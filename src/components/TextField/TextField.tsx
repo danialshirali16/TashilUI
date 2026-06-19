@@ -57,11 +57,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         data-readonly={readOnly ? "" : undefined}
       >
         <div className={styles.control}>
-          {unit != null && (
-            <span className={styles.unit} aria-hidden="true">
-              {unit}
-            </span>
-          )}
           <div className={styles.inputWrap}>
             <input
               ref={ref}
@@ -89,6 +84,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           </div>
           {trailingAdornment != null && (
             <span className={styles.trailing}>{trailingAdornment}</span>
+          )}
+          {/* unit (e.g. ﷼) sits at the inline-end — visually left in RTL */}
+          {unit != null && (
+            <span className={styles.unit} aria-hidden="true">
+              {unit}
+            </span>
           )}
         </div>
         {message != null && (
