@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { TextFieldSmall } from "./TextFieldSmall";
 import { IconTypeHash, IconClose } from "../../icons";
@@ -35,15 +36,28 @@ export const Currency: Story = {
   args: { inputMode: "currency", placeholder: "مبلغ به ریال" },
 };
 
-/** With a trailing clear button. */
+/**
+ * With a working trailing clear button. The clear control lives in the
+ * `trailingAdornment` slot; wiring its `onClick` (and showing it only when the
+ * field has a value) is the consumer's responsibility — shown here controlled.
+ */
 export const WithClear: Story = {
-  args: {
-    defaultValue: "۲٬۵۰۰٬۰۰۰",
-    trailingAdornment: (
-      <button type="button" aria-label="پاک کردن">
-        <IconClose />
-      </button>
-    ),
+  render: (args) => {
+    const [value, setValue] = useState("۲٬۵۰۰٬۰۰۰");
+    return (
+      <TextFieldSmall
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        trailingAdornment={
+          value ? (
+            <button type="button" aria-label="پاک کردن" onClick={() => setValue("")}>
+              <IconClose />
+            </button>
+          ) : null
+        }
+      />
+    );
   },
 };
 
