@@ -52,6 +52,15 @@ export const RialAmount: Story = {
   },
 };
 
+/** Currency mode — groups the typed number into thousands (integers only). */
+export const Currency: Story = {
+  args: {
+    label: "مبلغ قسط",
+    unit: RIAL,
+    inputMode: "currency",
+  },
+};
+
 export const AllStates: Story = {
   render: (args) => (
     <div style={{ display: "grid", gap: 24, inlineSize: 336 }}>

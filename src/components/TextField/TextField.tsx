@@ -1,11 +1,19 @@
 import { forwardRef, useId } from "react";
 import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 import { cx } from "../../lib/cx";
-import { toLatinDigits } from "../../lib/persian";
+import {
+  applyNumericFormat,
+  domInputMode,
+  isNumericMode,
+} from "../../lib/numericInput";
+import type { TextInputMode } from "../../lib/numericInput";
 import styles from "./TextField.module.css";
 
 export interface TextFieldProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "required"> {
+  extends Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "size" | "required" | "inputMode"
+  > {
   /** Floating label / title (Figma `title`). Rests in the placeholder spot and
    *  floats up to a small caption on focus or when filled. */
   label?: ReactNode;
@@ -23,8 +31,10 @@ export interface TextFieldProps
   optional?: boolean;
   /** Virtual-keyboard hint. When set to `"numeric"` or `"decimal"` (or with
    *  `type="number"`), Persian/Arabic-Indic digits typed by the user are
-   *  normalized to ASCII (e.g. ۲۵۰ → 250) so the value stays machine-readable. */
-  inputMode?: InputHTMLAttributes<HTMLInputElement>["inputMode"];
+   *  normalized to ASCII (e.g. ۲۵۰ → 250) so the value stays machine-readable.
+   *  The custom `"currency"` mode additionally groups the number into thousands
+   *  (integers only, e.g. ۲۵۰۰۰۰۰ → 2٬500٬000); on the DOM it maps to numeric. */
+  inputMode?: TextInputMode;
 }
 
 /**
@@ -60,24 +70,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const message = error ?? helperText;
 
     // Numeric fields normalize Persian/Arabic-Indic digits to ASCII as the user
-    // types, so the value flowing out is always machine-readable (e.g. ۱۲۳ → 123).
-    const isNumeric =
-      type === "number" || inputMode === "numeric" || inputMode === "decimal";
-
-    const handleChange = isNumeric
+    // types (and group thousands when inputMode="currency"), so the value
+    // flowing out is always machine-readable (e.g. ۱۲۳ → 123).
+    const handleChange = isNumericMode(inputMode, type)
       ? (event: ChangeEvent<HTMLInputElement>) => {
-          const el = event.target;
-          const latin = toLatinDigits(el.value);
-          if (latin !== el.value) {
-            // 1:1, length-preserving replacement — keep the caret where it was
-            const { selectionStart, selectionEnd } = el;
-            el.value = latin;
-            try {
-              el.setSelectionRange(selectionStart, selectionEnd);
-            } catch {
-              /* type="number" inputs don't support setSelectionRange */
-            }
-          }
+          applyNumericFormat(event.target, inputMode);
           onChange?.(event);
         }
       : onChange;
@@ -99,7 +96,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               readOnly={readOnly}
               required={!optional}
               type={type}
-              inputMode={inputMode}
+              inputMode={domInputMode(inputMode)}
               onChange={handleChange}
               // a placeholder is required for :placeholder-shown to drive the float
               placeholder={placeholder ?? " "}

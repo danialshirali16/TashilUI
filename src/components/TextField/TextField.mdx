@@ -83,6 +83,13 @@ receives the normalized value. Plain text fields are left untouched.
 
 <Canvas of={TextFieldStories.RialAmount} />
 
+The custom `inputMode="currency"` mode goes one step further: it groups the entered number into
+thousands with the `٬` separator (integers only — decimal points and any non-digits are stripped),
+so typing `۲۵۰۰۰۰۰` yields `2٬500٬000`. On the DOM it maps to `inputMode="numeric"`, and the caret
+is preserved as the separators shift.
+
+<Canvas of={TextFieldStories.Currency} />
+
 ## All states
 
 <Canvas of={TextFieldStories.AllStates} />
