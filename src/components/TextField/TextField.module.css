@@ -1,41 +1,64 @@
+/* TextField — mirrors Swiss Army Figma (floating-label input).
+ * Status: default / [data-status="error"] / [data-readonly] / [data-disabled].
+ * State: idle / :hover / :focus-within. The label rests in the placeholder
+ * position and floats up on focus or when filled (`:placeholder-shown`). */
+
 .field {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
   font-family: var(--font-family);
+  inline-size: 100%;
 }
 
-.label {
-  font-size: var(--font-size-title-sm);
-  line-height: var(--line-height-title-sm);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-default);
-}
-
-.required {
-  color: var(--color-text-error-default);
-  margin-inline-start: var(--space-2);
-}
-
+/* ── control (the bordered box) ───────────────────────────── */
 .control {
+  position: relative;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: var(--space-8);
-  background-color: var(--color-background-input);
-  border: 1px solid var(--color-border-input-default);
-  border-radius: var(--radius-8);
-  padding-block: var(--space-8);
+  min-block-size: var(--space-56);
   padding-inline: var(--space-12);
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  background-color: var(--color-background-input);
+  /* Figma: 1.5px border (no design token for this width) */
+  border: 1.5px solid var(--color-border-input-default);
+  border-radius: var(--radius-4);
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
 }
 
 .control:hover {
   border-color: var(--color-border-input-hover);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-input-shadow);
+}
+.control:focus-within {
+  border-color: var(--color-border-selected-default);
+  box-shadow: none;
 }
 
-.control:focus-within {
-  border-color: var(--color-border-primary-default);
-  box-shadow: 0 0 0 3px var(--color-border-primary-shadow);
+/* error */
+.field[data-status="error"] .control {
+  border-color: var(--color-border-error-default);
+}
+.field[data-status="error"] .control:hover {
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-error-subtle);
+}
+.field[data-status="error"] .control:focus-within {
+  border-color: var(--color-border-selected-default);
+}
+
+/* disabled */
+.field[data-disabled] .control {
+  background-color: var(--color-background-disable);
+  border-color: var(--color-border-disable);
+  box-shadow: none;
+}
+
+/* ── input + floating label ───────────────────────────────── */
+.inputWrap {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-inline-size: 0;
 }
 
 .input {
@@ -44,49 +67,107 @@
   border: none;
   outline: none;
   background: transparent;
-  color: var(--color-text-default);
+  color: var(--color-text-subtle);
+  caret-color: var(--color-icon-primary-default);
   font-size: var(--font-size-body-md);
   line-height: var(--line-height-body-md);
   text-align: start;
+  /* leave room for the floated label at the top */
+  padding-block-start: var(--space-24);
+  padding-block-end: var(--space-6);
 }
-
 .input::placeholder {
+  color: transparent;
+}
+.input:focus::placeholder {
   color: var(--color-text-placeholder);
 }
-
-.adornment {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  color: var(--color-text-subtle);
+.field[data-readonly] .input {
+  color: var(--color-text-subtler);
 }
-
-/* ── error ─────────────────────────────────────────────── */
-.error .control {
-  border-color: var(--color-border-error-default);
-}
-.error .control:focus-within {
-  box-shadow: 0 0 0 3px var(--color-background-error-overlay);
-}
-
-.message {
-  font-size: var(--font-size-caption-md);
-  line-height: var(--line-height-caption-md);
-  color: var(--color-text-subtle);
-}
-.errorMessage {
-  color: var(--color-text-error-default);
-}
-
-/* ── disabled ──────────────────────────────────────────── */
-.disabled .control {
-  background-color: var(--color-background-disable);
-  border-color: var(--color-border-disable);
-}
-.disabled .input {
+.field[data-disabled] .input {
   color: var(--color-text-disable);
   cursor: not-allowed;
 }
-.disabled .label {
+
+/* label — rests centered (placeholder position), floats up on focus/fill */
+.label {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-placeholder);
+  text-align: start;
+  pointer-events: none;
+  transition: inset-block-start var(--duration-fast) ease, font-size var(--duration-fast) ease,
+    color var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  inset-block-start: var(--space-8);
+  transform: none;
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+}
+
+/* floated label colors (later rules win: filled → error → focus) */
+.input:not(:placeholder-shown) ~ .label {
+  color: var(--color-text-subtler);
+}
+.field[data-status="error"] .input:not(:placeholder-shown) ~ .label {
+  color: var(--color-text-error-default);
+}
+.input:focus ~ .label {
+  color: var(--color-text-selected);
+}
+.field[data-readonly] .label {
+  color: var(--color-text-subtler);
+}
+.field[data-disabled] .label {
+  color: var(--color-text-disable);
+}
+
+.required {
+  color: var(--color-text-error-default);
+  margin-inline-start: var(--space-2);
+}
+
+/* ── unit + trailing ──────────────────────────────────────── */
+.unit {
+  align-self: center;
+  flex: 0 0 auto;
+  font-size: var(--font-size-title-md);
+  line-height: var(--line-height-title-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-placeholder);
+}
+.field[data-disabled] .unit {
+  color: var(--color-text-disable);
+}
+
+.trailing {
+  align-self: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--color-icon-default);
+}
+
+/* ── message ──────────────────────────────────────────────── */
+.message {
+  margin: 0;
+  padding-inline: var(--space-4);
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  color: var(--color-text-subtler);
+  text-align: start;
+}
+.field[data-status="error"] .message {
+  color: var(--color-text-error-default);
+}
+.field[data-disabled] .message {
   color: var(--color-text-disable);
 }

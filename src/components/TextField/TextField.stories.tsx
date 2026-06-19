@@ -16,34 +16,46 @@ type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {};
 
+/** Filled — the label floats up to a small caption. */
+export const Filled: Story = {
+  args: { defaultValue: "علی رضایی" },
+};
+
 export const WithHelper: Story = {
   args: { helperText: "نام خود را مطابق کارت ملی وارد کنید." },
 };
 
 export const WithError: Story = {
-  args: { error: "این فیلد الزامی است.", required: true },
+  args: { error: "این فیلد الزامی است.", required: true, defaultValue: "ع" },
 };
 
+export const ReadOnly: Story = {
+  args: { readOnly: true, defaultValue: "علی رضایی", helperText: "این مقدار قابل ویرایش نیست." },
+};
+
+export const Disabled: Story = {
+  args: { disabled: true, defaultValue: "غیرقابل ویرایش" },
+};
+
+/** Currency amount — the unit (﷼) sits at the inline-start. */
 export const RialAmount: Story = {
   args: {
     label: "مبلغ قسط",
     placeholder: "۲٬۵۰۰٬۰۰۰",
-    trailingAdornment: RIAL,
+    unit: RIAL,
     inputMode: "numeric",
   },
 };
 
-export const Disabled: Story = {
-  args: { disabled: true, value: "غیرقابل ویرایش" },
-};
-
 export const AllStates: Story = {
   render: (args) => (
-    <div style={{ display: "grid", gap: 16, inlineSize: 320 }}>
+    <div style={{ display: "grid", gap: 24, inlineSize: 336 }}>
       <TextField {...args} label="عادی" />
-      <TextField {...args} label="با راهنما" helperText="متن راهنما" />
-      <TextField {...args} label="خطا" error="مقدار نامعتبر است." />
-      <TextField {...args} label="غیرفعال" disabled value="..." />
+      <TextField {...args} label="پرشده" defaultValue="محتوای اینپوت" />
+      <TextField {...args} label="با راهنما" helperText="این یک توضیح است" />
+      <TextField {...args} label="خطا" error="این یک پیام خطا است" defaultValue="مقدار" />
+      <TextField {...args} label="فقط‌خواندنی" readOnly defaultValue="محتوای اینپوت" />
+      <TextField {...args} label="غیرفعال" disabled defaultValue="محتوای اینپوت" />
     </div>
   ),
 };

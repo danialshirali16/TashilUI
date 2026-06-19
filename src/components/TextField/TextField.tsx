@@ -5,23 +5,25 @@ import styles from "./TextField.module.css";
 
 export interface TextFieldProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
-  /** Visible field label. */
+  /** Floating label / title (Figma `title`). Rests in the placeholder spot and
+   *  floats up to a small caption on focus or when filled. */
   label?: ReactNode;
-  /** Helper text shown below the field. */
+  /** Helper / description text shown below the field (Figma `message`). */
   helperText?: ReactNode;
   /** Error message — when set, the field renders in its error state. */
   error?: ReactNode;
-  /** Content at the inline-start of the field (visually right in RTL). */
-  leadingAdornment?: ReactNode;
-  /** Content at the inline-end — e.g. the Rial symbol ﷼ for amounts. */
+  /** Unit adornment at the inline-start, e.g. ﷼ for amounts (Figma `unit`). */
+  unit?: ReactNode;
+  /** Trailing content at the inline-end, e.g. a clear button / icon. */
   trailingAdornment?: ReactNode;
-  /** Mark the field as required (adds a * to the label). */
+  /** Mark the field required (adds * to the label). */
   required?: boolean;
 }
 
 /**
- * Standard single-line text input. Pure CSS, semantic tokens only, RTL-aware
- * (text aligns to the inline start; leading adornment sits inline-start).
+ * Single-line text field with a floating label (Swiss Army Figma): 56px tall,
+ * label rests as the placeholder and floats up on focus/fill, optional unit +
+ * trailing icon + helper/error message. Pure CSS, semantic tokens, RTL-aware.
  */
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(
@@ -29,11 +31,13 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       label,
       helperText,
       error,
-      leadingAdornment,
+      unit,
       trailingAdornment,
       required,
       disabled,
+      readOnly,
       id,
+      placeholder,
       className,
       ...rest
     },
@@ -47,48 +51,50 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
     return (
       <div
-        className={cx(
-          styles.field,
-          hasError && styles.error,
-          disabled && styles.disabled,
-          className,
-        )}
+        className={cx(styles.field, className)}
+        data-status={hasError ? "error" : undefined}
+        data-disabled={disabled ? "" : undefined}
+        data-readonly={readOnly ? "" : undefined}
       >
-        {label && (
-          <label className={styles.label} htmlFor={inputId}>
-            {label}
-            {required && (
-              <span className={styles.required} aria-hidden="true">
-                *
-              </span>
-            )}
-          </label>
-        )}
         <div className={styles.control}>
-          {leadingAdornment && (
-            <span className={styles.adornment}>{leadingAdornment}</span>
+          {unit != null && (
+            <span className={styles.unit} aria-hidden="true">
+              {unit}
+            </span>
           )}
-          <input
-            ref={ref}
-            id={inputId}
-            className={styles.input}
-            disabled={disabled}
-            required={required}
-            aria-invalid={hasError || undefined}
-            aria-describedby={message ? describedById : undefined}
-            {...rest}
-          />
-          {trailingAdornment && (
-            <span className={styles.adornment}>{trailingAdornment}</span>
+          <div className={styles.inputWrap}>
+            <input
+              ref={ref}
+              id={inputId}
+              className={styles.input}
+              disabled={disabled}
+              readOnly={readOnly}
+              required={required}
+              // a placeholder is required for :placeholder-shown to drive the float
+              placeholder={placeholder ?? " "}
+              aria-invalid={hasError || undefined}
+              aria-describedby={message != null ? describedById : undefined}
+              {...rest}
+            />
+            {label != null && (
+              <label className={styles.label} htmlFor={inputId}>
+                {label}
+                {required && (
+                  <span className={styles.required} aria-hidden="true">
+                    *
+                  </span>
+                )}
+              </label>
+            )}
+          </div>
+          {trailingAdornment != null && (
+            <span className={styles.trailing}>{trailingAdornment}</span>
           )}
         </div>
-        {message && (
-          <span
-            id={describedById}
-            className={cx(styles.message, hasError && styles.errorMessage)}
-          >
+        {message != null && (
+          <p id={describedById} className={styles.message}>
             {message}
-          </span>
+          </p>
         )}
       </div>
     );
