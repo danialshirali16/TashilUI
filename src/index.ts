@@ -15,6 +15,9 @@ export type { TextFieldProps } from "./components/TextField";
 export { TextArea } from "./components/TextArea";
 export type { TextAreaProps } from "./components/TextArea";
 
+export { TextFieldSmall } from "./components/TextFieldSmall";
+export type { TextFieldSmallProps } from "./components/TextFieldSmall";
+
 export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 
@@ -30,4 +33,6 @@ export type { TooltipProps } from "./components/Tooltip";
 // Formatting helpers (foundations).
 export { toPersianDigits, toLatinDigits, formatRial, RIAL } from "./lib/persian";
 export type { FormatRialOptions } from "./lib/persian";
+export { groupThousands, THOUSANDS_SEPARATOR } from "./lib/numericInput";
+export type { TextInputMode } from "./lib/numericInput";
 export { cx } from "./lib/cx";

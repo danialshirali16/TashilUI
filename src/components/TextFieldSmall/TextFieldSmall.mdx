@@ -1,0 +1,121 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as TextFieldSmallStories from "./TextFieldSmall.stories";
+
+<Meta of={TextFieldSmallStories} name="Overview" />
+
+# TextFieldSmall
+
+A compact single-line input (40px tall, body-sm text) with **no floating label** — built for tight
+spaces like table cells, inline amounts, and filter fields. Supports an optional leading icon,
+inline unit symbol, trailing adornment (e.g. clear button), helper and error messages, and
+states for read-only and disabled.
+
+## When to use
+
+- **Dense, compact layouts** — tables, inline editing, filter rows where vertical space is
+  constrained.
+- **Currency amounts** — combine the `unit` prop with `inputMode="currency"` to display and
+  collect amounts like ۲٬۵۰۰٬۰۰۰ ﷼.
+- **Inline data entry** — amounts, quantities, codes, or other short values that don't need a
+  floating label.
+
+**Compared to TextField:** TextFieldSmall has no floating label and is 40px tall, whereas
+TextField has a floating label and is 56px tall. Choose TextFieldSmall when space is tight;
+use TextField for multi-step forms where a prominent, always-visible label is preferred.
+
+## Anatomy
+
+The field consists of:
+
+- **Optional leading icon** — a 16px icon at the inline-start (e.g. a type glyph).
+- **Input and placeholder** — the text entry area, styled with body-sm typography.
+- **Optional unit** — a bold, muted symbol (e.g. ﷼) right-aligned next to the input, styled like
+  a caption.
+- **Optional trailing adornment** — a 18px icon or button at the inline-end (e.g. a clear button).
+
+<Canvas of={TextFieldSmallStories.Default} />
+<Canvas of={TextFieldSmallStories.WithClear} />
+
+## Numeric & currency input
+
+When the field is numeric — `type="number"`, `inputMode="numeric"`, or `inputMode="decimal"` —
+Persian (`۰۱۲۳۴۵۶۷۸۹`) and Arabic-Indic (`٠١٢٣٤٥٦٧٨٩`) digits are converted to ASCII
+(`0123456789`) as the user types. This keeps the field's value machine-readable for parsing and
+submission while letting users type in their native numerals. For example, typing `۲۵۰` yields
+the value `250`. The caret position is preserved, and your `onChange` handler always receives the
+normalized value.
+
+The custom `"currency"` mode additionally groups the number into thousands using the `٬` separator
+(integers only—decimal points and non-digits are stripped). For example, typing `۲۵۰۰۰۰۰` yields
+`2٬500٬000`. On the DOM, `inputMode="currency"` is rendered as the native `inputMode="numeric"`.
+
+<Canvas of={TextFieldSmallStories.Currency} />
+
+## Helper text
+
+The `helperText` prop renders descriptive text below the field. Use it to clarify the expected
+format or requirements.
+
+<Canvas of={TextFieldSmallStories.WithHelper} />
+
+## Error status
+
+Set the `error` prop with an error message to mark the field as invalid. The border and message
+turn red; the field gets `aria-invalid="true"`.
+
+<Canvas of={TextFieldSmallStories.WithError} />
+
+## Read-only
+
+Set `readOnly` to show a value without allowing edits. The field remains visually normal (not
+greyed out); the native `readonly` attribute prevents modification while keeping the value
+focusable, selectable, and announced to assistive tech.
+
+<Canvas of={TextFieldSmallStories.ReadOnly} />
+
+## Disabled
+
+Set `disabled` to grey out the field and prevent all interaction. The text, unit, icons, and
+message all use the disabled color ramp.
+
+<Canvas of={TextFieldSmallStories.Disabled} />
+
+## Optional vs. required
+
+By default, the field is **required** (the native `required` attribute is set). Set the
+`optional` prop to remove the `required` attribute and mark it as optional. **Note:** this
+compact variant has no visible label, so there is no «(اختیاری)» marker displayed—the `optional`
+prop only affects form-validation requiredness.
+
+<Canvas of={TextFieldSmallStories.Optional} />
+
+## All states
+
+<Canvas of={TextFieldSmallStories.AllStates} />
+
+## Accessibility
+
+- **Label association** — the field has no built-in visible label. Associate it via a
+  consumer-provided `id`/`htmlFor` on an external label, or use `aria-label` for unlabeled
+  cases. Clicking an external label will focus the field.
+- **Error** — `error` sets `aria-invalid="true"` and `aria-describedby` to the error message.
+- **Helper / error messages** — `aria-describedby` connects the input to the message so screen
+  readers announce it.
+- **Read-only** — the native `readonly` attribute conveys the state to assistive tech while
+  keeping the value focusable and selectable.
+- **Disabled** — the standard `disabled` attribute prevents all interaction.
+- **Trailing buttons** — if `trailingAdornment` contains an interactive button (e.g. clear),
+  give it a descriptive `aria-label`.
+
+## Token-driven styling
+
+All colors, sizes, borders, and transitions are semantic tokens—**no hardcoded values**. The
+container is `40px` tall (`--space-40`), text is `--font-size-body-sm`, and status colors come
+from the `border/*`, `background/*`, and `text/*` ramps. The border width is `1px` (from the
+Figma spec). Themes switch with no component changes.
+
+## API reference
+
+<Controls of={TextFieldSmallStories.Default} />
+
+<ArgTypes of={TextFieldSmallStories.default} />
