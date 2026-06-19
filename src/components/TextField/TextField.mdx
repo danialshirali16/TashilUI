@@ -1,0 +1,101 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as TextFieldStories from "./TextField.stories";
+
+<Meta of={TextFieldStories} name="Overview" />
+
+# TextField
+
+A single-line text input with a **floating label** (rests in the placeholder position and floats
+up to a small caption on focus or when filled). Built with pure CSS, semantic tokens, and
+full RTL support. Supports optional units, trailing adornments, helper and error messages, and
+states for read-only and disabled.
+
+## When to use
+
+- **Collect text input** — names, emails, phone numbers, search queries.
+- **Form fields with labels** — the floating label eliminates extra layout space and stays
+  visible during focus.
+- **Currency or unit entry** — use the `unit` prop for currency symbols, measurements, etc.
+- **Multi-step forms** — pair with `helperText` and `error` to guide users through validation.
+
+## Floating label
+
+The label rests centered in the input (placeholder position) when empty and is transparent.
+On focus or when the field is filled, the label floats up to a small caption at the inline-start.
+This design eliminates the need for a separate floating container and keeps labels in view.
+
+<Canvas of={TextFieldStories.Default} />
+<Canvas of={TextFieldStories.Filled} />
+
+## Helper text
+
+The `helperText` prop renders descriptive text below the field. Use it to clarify the expected
+format or requirements.
+
+<Canvas of={TextFieldStories.WithHelper} />
+
+## Error status
+
+Set the `error` prop with an error message to mark the field as invalid. The border, label, and
+message all turn red; the field gets `aria-invalid="true"`.
+
+<Canvas of={TextFieldStories.WithError} />
+
+## Read-only
+
+Set `readOnly` to show a value without allowing edits. The field remains visually normal (not
+greyed out) but is removed from the tab order and cannot be modified. Pairs with `aria-readonly`.
+
+<Canvas of={TextFieldStories.ReadOnly} />
+
+## Disabled
+
+Set `disabled` to grey out the field and prevent all interaction. The label, text, unit, and
+message all use the disabled color ramp.
+
+<Canvas of={TextFieldStories.Disabled} />
+
+## Optional vs. required
+
+By default, the field is **required** (the native `required` attribute is set). Set the
+`optional` prop to mark it as optional — this displays «(اختیاری)» next to the label in the
+same style, and removes the `required` attribute.
+
+<Canvas of={TextFieldStories.Optional} />
+
+## Unit and trailing adornments
+
+Use the `unit` prop to render a unit symbol (e.g. ﷼) at the inline-start, styled like a
+caption. For currency amounts, combine with `inputMode="numeric"`:
+
+<Canvas of={TextFieldStories.RialAmount} />
+
+The `trailingAdornment` prop renders content at the inline-end (e.g. a clear button or icon).
+
+## All states
+
+<Canvas of={TextFieldStories.AllStates} />
+
+## Accessibility
+
+- **Label association** — the `label` prop wires `htmlFor`/`id` automatically (or pass your own
+  `id`); clicking the label focuses the field.
+- **Error** — `error` sets `aria-invalid="true"` and `aria-describedby` to the message.
+- **Helper / error messages** — `aria-describedby` connects the input to the message so screen
+  readers announce it.
+- **Read-only** — sets `aria-readonly="true"` and removes the field from tab order.
+- **Disabled** — the standard `disabled` attribute prevents all interaction.
+
+## Token-driven styling
+
+All colors, sizes, borders, and transitions are semantic tokens — **no hardcoded values**.
+The border width is `1.5px` (no design token exists for this value; it's from the Figma spec).
+The container is `56px` tall (`--space-56`), label text is `--font-size-body-md` floating up to
+`--font-size-caption-md`, and status colors come from the `border/*`, `background/*`, and
+`text/*` ramps. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={TextFieldStories.Default} />
+
+<ArgTypes of={TextFieldStories.default} />
