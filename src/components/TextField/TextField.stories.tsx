@@ -26,7 +26,12 @@ export const WithHelper: Story = {
 };
 
 export const WithError: Story = {
-  args: { error: "این فیلد الزامی است.", required: true, defaultValue: "ع" },
+  args: { error: "این فیلد الزامی است.", defaultValue: "ع" },
+};
+
+/** Optional field — shows «(اختیاری)» next to the label. Without it the field is required. */
+export const Optional: Story = {
+  args: { optional: true },
 };
 
 export const ReadOnly: Story = {

@@ -130,9 +130,11 @@
   color: var(--color-text-disable);
 }
 
-.required {
-  color: var(--color-text-error-default);
+/* «(اختیاری)» marker — inherits the label's color/size so it matches exactly */
+.optionalTag {
   margin-inline-start: var(--space-2);
+  color: inherit;
+  font: inherit;
 }
 
 /* ── unit + trailing ──────────────────────────────────────── */

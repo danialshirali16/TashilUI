@@ -4,7 +4,7 @@ import { cx } from "../../lib/cx";
 import styles from "./TextField.module.css";
 
 export interface TextFieldProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "required"> {
   /** Floating label / title (Figma `title`). Rests in the placeholder spot and
    *  floats up to a small caption on focus or when filled. */
   label?: ReactNode;
@@ -16,8 +16,10 @@ export interface TextFieldProps
   unit?: ReactNode;
   /** Trailing content at the inline-end, e.g. a clear button / icon. */
   trailingAdornment?: ReactNode;
-  /** Mark the field required (adds * to the label). */
-  required?: boolean;
+  /** Mark the field as optional — shows «(اختیاری)» next to the label, styled
+   *  like the label. When omitted/false (default) the field is required (the
+   *  native `required` attribute is set). */
+  optional?: boolean;
 }
 
 /**
@@ -33,7 +35,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       error,
       unit,
       trailingAdornment,
-      required,
+      optional,
       disabled,
       readOnly,
       id,
@@ -64,7 +66,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               className={styles.input}
               disabled={disabled}
               readOnly={readOnly}
-              required={required}
+              required={!optional}
               // a placeholder is required for :placeholder-shown to drive the float
               placeholder={placeholder ?? " "}
               aria-invalid={hasError || undefined}
@@ -74,11 +76,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             {label != null && (
               <label className={styles.label} htmlFor={inputId}>
                 {label}
-                {required && (
-                  <span className={styles.required} aria-hidden="true">
-                    *
-                  </span>
-                )}
+                {optional && <span className={styles.optionalTag}>(اختیاری)</span>}
               </label>
             )}
           </div>
