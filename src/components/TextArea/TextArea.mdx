@@ -1,0 +1,102 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as TextAreaStories from "./TextArea.stories";
+
+<Meta of={TextAreaStories} name="Overview" />
+
+# TextArea
+
+A multi-line text input with a **floating label** (rests near the top of the box and floats
+up to a small caption on focus or when filled). Built with pure CSS, semantic tokens, and full
+RTL support. The textarea height automatically tracks its content—no inner scrollbar or manual
+resize handle.
+
+## When to use
+
+- **Collect longer text** — descriptions, comments, feedback, multi-line messages.
+- **Form fields with labels** — the floating label stays visible and eliminates extra layout space.
+- **Auto-growing text input** — the box expands as users type, with a minimum height of 80px.
+- **Multi-step forms** — pair with `helperText` and `error` to guide users through validation.
+
+## Floating label
+
+The label rests near the top of the textarea (placeholder position) when empty and is transparent.
+On focus or when the field is filled, the label floats up to a small caption at the inline-start.
+This design eliminates the need for a separate floating container and keeps labels in view.
+
+<Canvas of={TextAreaStories.Default} />
+<Canvas of={TextAreaStories.Filled} />
+
+## Auto-grow / auto-resize
+
+The textarea height automatically adjusts to fit its content—it grows as the user types and shrinks
+when they delete text. There is no inner scrollbar and no manual drag-resize handle. The minimum
+height is 80px. Auto-resizing works for both controlled (`value` prop) and uncontrolled inputs,
+and recalculates on first mount and whenever the value changes.
+
+<Canvas of={TextAreaStories.Filled} />
+
+## Helper text
+
+The `helperText` prop renders descriptive text below the field. Use it to clarify the expected
+format or requirements.
+
+<Canvas of={TextAreaStories.WithHelper} />
+
+## Error status
+
+Set the `error` prop with an error message to mark the field as invalid. The border, label, and
+message all turn red; the field gets `aria-invalid="true"`.
+
+<Canvas of={TextAreaStories.WithError} />
+
+## Read-only
+
+Set `readOnly` to show a value without allowing edits. The field remains visually normal (not
+greyed out); the native `readonly` attribute prevents modification while keeping the value
+selectable and announced to assistive tech.
+
+<Canvas of={TextAreaStories.ReadOnly} />
+
+## Disabled
+
+Set `disabled` to grey out the field and prevent all interaction. The label, text, and message
+all use the disabled color ramp.
+
+<Canvas of={TextAreaStories.Disabled} />
+
+## Optional vs. required
+
+By default, the field is **required** (the native `required` attribute is set). Set the
+`optional` prop to mark it as optional — this displays «(اختیاری)» next to the label in the
+same style, and removes the `required` attribute.
+
+<Canvas of={TextAreaStories.Optional} />
+
+## All states
+
+<Canvas of={TextAreaStories.AllStates} />
+
+## Accessibility
+
+- **Label association** — the `label` prop wires `htmlFor`/`id` automatically (or pass your own
+  `id`); clicking the label focuses the field.
+- **Error** — `error` sets `aria-invalid="true"` and `aria-describedby` to the message.
+- **Helper / error messages** — `aria-describedby` connects the input to the message so screen
+  readers announce it.
+- **Read-only** — the native `readonly` attribute conveys the state to assistive tech while
+  keeping the value focusable and selectable.
+- **Disabled** — the standard `disabled` attribute prevents all interaction.
+
+## Token-driven styling
+
+All colors, sizes, borders, and transitions are semantic tokens — **no hardcoded values**.
+The border width is `1.5px` (no design token exists for this value; it's from the Figma spec).
+The minimum height is `80px` (no design token exists for this size either; it's from the Figma spec).
+Label text is `--font-size-body-md` floating up to `--font-size-caption-md`, and status colors
+come from the `border/*`, `background/*`, and `text/*` ramps. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={TextAreaStories.Default} />
+
+<ArgTypes of={TextAreaStories.default} />

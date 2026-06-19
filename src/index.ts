@@ -12,6 +12,9 @@ export type {
 export { TextField } from "./components/TextField";
 export type { TextFieldProps } from "./components/TextField";
 
+export { TextArea } from "./components/TextArea";
+export type { TextAreaProps } from "./components/TextArea";
+
 export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 

@@ -1,0 +1,161 @@
+/* TextArea — mirrors Swiss Army Figma (multi-line floating-label input).
+ * Status: default / [data-status="error"] / [data-readonly] / [data-disabled].
+ * State: idle / :hover / :focus-within. Like TextField but multi-line: the box
+ * is top-aligned (80px min), the label rests near the top and floats up on
+ * focus or when filled (`:placeholder-shown`). */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-family: var(--font-family);
+  inline-size: 100%;
+}
+
+/* ── control (the bordered box) ───────────────────────────── */
+.control {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  /* Figma: 80px min height (no design token for this size) */
+  min-block-size: 80px;
+  padding-inline: var(--space-12);
+  background-color: var(--color-background-input);
+  /* Figma: 1.5px border (no design token for this width) */
+  border: 1.5px solid var(--color-border-input-default);
+  border-radius: var(--radius-4);
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+
+.control:hover {
+  border-color: var(--color-border-input-hover);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-input-shadow);
+}
+.control:focus-within {
+  border-color: var(--color-border-selected-default);
+  box-shadow: none;
+}
+
+/* error */
+.field[data-status="error"] .control {
+  border-color: var(--color-border-error-default);
+}
+.field[data-status="error"] .control:hover {
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-error-subtle);
+}
+.field[data-status="error"] .control:focus-within {
+  border-color: var(--color-border-selected-default);
+}
+
+/* disabled */
+.field[data-disabled] .control {
+  background-color: var(--color-background-disable);
+  border-color: var(--color-border-disable);
+  box-shadow: none;
+}
+
+/* ── textarea + floating label ────────────────────────────── */
+.inputWrap {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  /* Figma: the text column has 4px inline padding */
+  padding-inline: var(--space-4);
+}
+
+.textarea {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text-subtle);
+  caret-color: var(--color-icon-primary-default);
+  font-family: inherit;
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  text-align: start;
+  /* height is driven by content (auto-grow in JS), so disable manual resize
+   * and hide the scrollbar that would otherwise appear while measuring */
+  resize: none;
+  overflow: hidden;
+  /* leave room for the floated label at the top */
+  padding-block-start: var(--space-28);
+  padding-block-end: var(--space-6);
+  padding-inline: 0;
+}
+.textarea::placeholder {
+  color: transparent;
+}
+.textarea:focus::placeholder {
+  color: var(--color-text-placeholder);
+}
+.field[data-readonly] .textarea {
+  color: var(--color-text-subtler);
+}
+.field[data-disabled] .textarea {
+  color: var(--color-text-disable);
+  cursor: not-allowed;
+}
+
+/* label — rests near the top (placeholder position), floats up on focus/fill */
+.label {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: var(--space-18);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-placeholder);
+  text-align: start;
+  pointer-events: none;
+  transition: inset-block-start var(--duration-fast) ease, font-size var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.textarea:focus ~ .label,
+.textarea:not(:placeholder-shown) ~ .label {
+  inset-block-start: var(--space-8);
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+}
+
+/* floated label colors (later rules win: filled → error → focus) */
+.textarea:not(:placeholder-shown) ~ .label {
+  color: var(--color-text-subtler);
+}
+.field[data-status="error"] .textarea:not(:placeholder-shown) ~ .label {
+  color: var(--color-text-error-default);
+}
+.textarea:focus ~ .label {
+  color: var(--color-text-selected);
+}
+.field[data-readonly] .label {
+  color: var(--color-text-subtler);
+}
+.field[data-disabled] .label {
+  color: var(--color-text-disable);
+}
+
+/* «(اختیاری)» marker — inherits the label's color/size so it matches exactly */
+.optionalTag {
+  margin-inline-start: var(--space-2);
+  color: inherit;
+  font: inherit;
+}
+
+/* ── message ──────────────────────────────────────────────── */
+.message {
+  margin: 0;
+  padding-inline: var(--space-16);
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  color: var(--color-text-subtler);
+  text-align: start;
+}
+.field[data-status="error"] .message {
+  color: var(--color-text-error-default);
+}
+.field[data-disabled] .message {
+  color: var(--color-text-disable);
+}
