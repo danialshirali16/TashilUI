@@ -83,9 +83,9 @@ message all use the disabled color ramp.
 ## Optional vs. required
 
 By default, the field is **required** (the native `required` attribute is set). Set the
-`optional` prop to remove the `required` attribute and mark it as optional. **Note:** this
-compact variant has no visible label, so there is no «(اختیاری)» marker displayed—the `optional`
-prop only affects form-validation requiredness.
+`optional` prop to remove the `required` attribute and mark the field as optional. Because this
+compact variant has no label, the «(اختیاری)» marker rides along with the placeholder: it shows
+while the field is empty and disappears as soon as the user starts typing.
 
 <Canvas of={TextFieldSmallStories.Optional} />
 

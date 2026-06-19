@@ -26,9 +26,9 @@ export interface TextFieldSmallProps
   /** Trailing content at the inline-end (Figma `trailingIcon`), e.g. a clear button. */
   trailingAdornment?: ReactNode;
   /** Mark the field as optional — when omitted/false (default) the field is
-   *  required (the native `required` attribute is set). This compact variant has
-   *  no visible label, so there is no «(اختیاری)» marker — it only toggles
-   *  requiredness for form validation. */
+   *  required (the native `required` attribute is set). Since this compact
+   *  variant has no label, the «(اختیاری)» marker is appended to the placeholder:
+   *  it shows while the field is empty and disappears once the user types. */
   optional?: boolean;
   /** Virtual-keyboard hint. When set to `"numeric"` or `"decimal"` (or with
    *  `type="number"`), Persian/Arabic-Indic digits typed by the user are
@@ -71,6 +71,13 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
     const hasError = Boolean(error);
     const message = error ?? helperText;
 
+    // This compact variant has no label, so the optional marker rides along with
+    // the placeholder: «(اختیاری)» shows while empty and disappears once the user
+    // starts typing (native placeholder behavior).
+    const effectivePlaceholder = optional
+      ? [placeholder, "(اختیاری)"].filter(Boolean).join(" ")
+      : placeholder;
+
     // Numeric fields normalize Persian/Arabic-Indic digits to ASCII as the user
     // types (and group thousands when inputMode="currency"), so the value
     // flowing out is always machine-readable (e.g. ۱۲۳ → 123).
@@ -104,7 +111,7 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
             type={type}
             inputMode={domInputMode(inputMode)}
             onChange={handleChange}
-            placeholder={placeholder}
+            placeholder={effectivePlaceholder}
             aria-invalid={hasError || undefined}
             aria-describedby={message != null ? describedById : undefined}
             {...rest}
