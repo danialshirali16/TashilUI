@@ -41,7 +41,7 @@ const IndeterminateIcon = () => (
 export const Checkbox = forwardRef<
   ElementRef<typeof RadixCheckbox.Root>,
   CheckboxProps
->(function Checkbox({ label, id, className, error, readOnly, ...rest }, ref) {
+>(function Checkbox({ label, id, className, error, readOnly, disabled, ...rest }, ref) {
   const autoId = useId();
   const checkboxId = id ?? autoId;
   const box = (
@@ -49,11 +49,14 @@ export const Checkbox = forwardRef<
       ref={ref}
       id={checkboxId}
       className={cx(styles.box, className)}
+      // Native checkboxes ignore `readonly`, and a label click toggles via
+      // htmlFor regardless of CSS pointer-events — so make read-only genuinely
+      // inert (like disabled) while keeping its read-only styling via data-readonly.
+      disabled={disabled || readOnly}
       data-error={error ? "" : undefined}
       data-readonly={readOnly ? "" : undefined}
       aria-invalid={error || undefined}
       aria-readonly={readOnly || undefined}
-      tabIndex={readOnly ? -1 : undefined}
       {...rest}
     >
       <RadixCheckbox.Indicator className={styles.indicator}>
@@ -65,7 +68,7 @@ export const Checkbox = forwardRef<
   if (!label) return box;
 
   return (
-    <span className={styles.wrapper} data-disabled={rest.disabled ? "" : undefined}>
+    <span className={styles.wrapper} data-disabled={disabled ? "" : undefined}>
       {box}
       <label className={styles.label} htmlFor={checkboxId}>
         {label}

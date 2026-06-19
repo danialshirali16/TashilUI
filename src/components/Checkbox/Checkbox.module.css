@@ -104,7 +104,9 @@
 }
 
 /* ── Disabled (wins over checked/error fills) ──────────────── */
-.box[data-disabled] {
+/* read-only is also Radix-disabled (so it's inert), but must keep its own look,
+ * so the disabled visuals are scoped to :not([data-readonly]). */
+.box[data-disabled]:not([data-readonly]) {
   cursor: not-allowed;
   background-color: var(--color-background-disable);
   border-color: var(--color-border-disable);
@@ -119,11 +121,11 @@
   color: var(--color-icon-oncolor-default);
   pointer-events: none;
 }
+.box[data-disabled]:not([data-readonly]) .indicator {
+  color: var(--color-icon-disable);
+}
 .box[data-readonly] .indicator {
   color: var(--color-icon-subtler);
-}
-.box[data-disabled] .indicator {
-  color: var(--color-icon-disable);
 }
 .indicator svg {
   inline-size: var(--space-12);
