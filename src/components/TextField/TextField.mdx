@@ -72,6 +72,17 @@ caption. For currency amounts, combine with `inputMode="numeric"`:
 
 The `trailingAdornment` prop renders content at the inline-end (e.g. a clear button or icon).
 
+## Numeric digit normalization
+
+When the field is numeric — `type="number"`, `inputMode="numeric"`, or `inputMode="decimal"` —
+Persian (`۰۱۲۳۴۵۶۷۸۹`) and Arabic-Indic (`٠١٢٣٤٥٦٧٨٩`) digits are converted to ASCII
+(`0123456789`) as the user types. This keeps the field's value machine-readable for parsing and
+submission while letting users type in their native numerals. For example, typing `۲۵۰۰۰۰۰`
+yields the value `2500000`. The caret position is preserved, and your `onChange` handler always
+receives the normalized value. Plain text fields are left untouched.
+
+<Canvas of={TextFieldStories.RialAmount} />
+
 ## All states
 
 <Canvas of={TextFieldStories.AllStates} />

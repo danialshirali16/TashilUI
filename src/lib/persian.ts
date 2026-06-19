@@ -7,9 +7,12 @@ export function toPersianDigits(input: string | number): string {
   return String(input).replace(/[0-9]/g, (d) => PERSIAN_DIGITS[Number(d)]);
 }
 
-/** Convert Persian digits back to ASCII (e.g. for parsing user input). */
+/** Convert Persian (۰–۹) and Arabic-Indic (٠–٩) digits back to ASCII
+ *  (e.g. for parsing user input). Non-digit characters are left untouched. */
 export function toLatinDigits(input: string): string {
-  return input.replace(/[۰-۹]/g, (d) => String(PERSIAN_DIGITS.indexOf(d)));
+  return input
+    .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06f0)) // U+06F0–06F9 Persian
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660)); // U+0660–0669 Arabic-Indic
 }
 
 /** The Rial currency symbol (﷼). */

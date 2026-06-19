@@ -72,9 +72,11 @@
   font-size: var(--font-size-body-md);
   line-height: var(--line-height-body-md);
   text-align: start;
-  /* leave room for the floated label at the top */
+  /* leave room for the floated label at the top; zero the UA inline padding
+   * so typed text aligns with the floating label (inset-inline: 0) */
   padding-block-start: var(--space-24);
   padding-block-end: var(--space-6);
+  padding-inline: 0;
 }
 .input::placeholder {
   color: transparent;
