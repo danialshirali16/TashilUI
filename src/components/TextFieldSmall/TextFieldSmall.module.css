@@ -125,6 +125,23 @@
   cursor: pointer;
 }
 
+/* built-in clear (✕) button */
+.clearButton {
+  border-radius: var(--radius-4);
+  transition: color var(--duration-fast) ease;
+}
+.clearButton:hover {
+  color: var(--color-icon-subtle);
+}
+.clearButton:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-selected-default);
+  outline-offset: var(--focus-ring-offset);
+}
+.clearButton svg {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
 /* ── message ──────────────────────────────────────────────── */
 .message {
   margin: 0;

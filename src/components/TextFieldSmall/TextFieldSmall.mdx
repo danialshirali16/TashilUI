@@ -31,9 +31,19 @@ The field consists of:
 - **Input and placeholder** — the text entry area, styled with body-sm typography.
 - **Optional unit** — a bold, muted symbol (e.g. ﷼) right-aligned next to the input, styled like
   a caption.
-- **Optional trailing adornment** — a 18px icon or button at the inline-end (e.g. a clear button).
+- **Optional trailing adornment** — a custom 18px icon or button at the inline-end.
+- **Built-in clear button** — set `clearable` to render a ✕ button at the inline-end (see below).
 
 <Canvas of={TextFieldSmallStories.Default} />
+
+## Clear button
+
+Set `clearable` to render a built-in ✕ button at the inline-end. It appears only while the field
+has a value; clicking it empties the field, refocuses it, and fires `onChange` (with an empty
+value) plus the optional `onClear` callback. It works for both controlled and uncontrolled usage,
+and is automatically hidden when the field is `disabled` or `readOnly`. For a non-clear trailing
+control, use the generic `trailingAdornment` slot instead (both can be present at once).
+
 <Canvas of={TextFieldSmallStories.WithClear} />
 
 ## Numeric & currency input

@@ -1,4 +1,4 @@
-import { forwardRef, useId } from "react";
+import { forwardRef, useCallback, useId, useRef, useState } from "react";
 import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 import { cx } from "../../lib/cx";
 import {
@@ -8,6 +8,18 @@ import {
 } from "../../lib/numericInput";
 import type { TextInputMode } from "../../lib/numericInput";
 import styles from "./TextFieldSmall.module.css";
+
+/* 18px clear glyph (Figma trailing ✕), drawn on a 24 viewBox. */
+const ClearIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <path
+      d="m6 6 12 12M18 6 6 18"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
 
 export interface TextFieldSmallProps
   extends Omit<
@@ -23,8 +35,15 @@ export interface TextFieldSmallProps
   unit?: ReactNode;
   /** Leading icon at the inline-start (Figma `leadingIcon`), e.g. a type glyph. */
   leadingIcon?: ReactNode;
-  /** Trailing content at the inline-end (Figma `trailingIcon`), e.g. a clear button. */
+  /** Trailing content at the inline-end (Figma `trailingIcon`), e.g. a custom
+   *  button. Rendered before the built-in clear button when both are present. */
   trailingAdornment?: ReactNode;
+  /** Show a built-in clear (✕) button at the inline-end while the field has a
+   *  value. Clicking it empties the field, focuses it, and fires `onChange`
+   *  (with an empty value) and `onClear`. Hidden when disabled or read-only. */
+  clearable?: boolean;
+  /** Called when the built-in clear button empties the field. */
+  onClear?: () => void;
   /** Mark the field as optional — when omitted/false (default) the field is
    *  required (the native `required` attribute is set). Since this compact
    *  variant has no label, the «(اختیاری)» marker is appended to the placeholder:
@@ -52,6 +71,8 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
       unit,
       leadingIcon,
       trailingAdornment,
+      clearable,
+      onClear,
       optional,
       disabled,
       readOnly,
@@ -60,6 +81,8 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
       className,
       type,
       inputMode,
+      value,
+      defaultValue,
       onChange,
       ...rest
     },
@@ -78,15 +101,54 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
       ? [placeholder, "(اختیاری)"].filter(Boolean).join(" ")
       : placeholder;
 
+    // Merge the forwarded ref with our own so the clear button can reach the
+    // native input (works for controlled and uncontrolled usage alike).
+    const innerRef = useRef<HTMLInputElement | null>(null);
+    const setRef = useCallback(
+      (el: HTMLInputElement | null) => {
+        innerRef.current = el;
+        if (typeof ref === "function") ref(el);
+        else if (ref) ref.current = el;
+      },
+      [ref],
+    );
+
+    // Track whether the field currently has a value so the clear button can
+    // show/hide. Controlled usage reads `value`; uncontrolled tracks via state.
+    const isControlled = value !== undefined;
+    const [uncontrolledHasValue, setUncontrolledHasValue] = useState(
+      () => defaultValue != null && String(defaultValue) !== "",
+    );
+    const hasValue = isControlled
+      ? value != null && value !== ""
+      : uncontrolledHasValue;
+
     // Numeric fields normalize Persian/Arabic-Indic digits to ASCII as the user
     // types (and group thousands when inputMode="currency"), so the value
     // flowing out is always machine-readable (e.g. ۱۲۳ → 123).
-    const handleChange = isNumericMode(inputMode, type)
-      ? (event: ChangeEvent<HTMLInputElement>) => {
-          applyNumericFormat(event.target, inputMode);
-          onChange?.(event);
-        }
-      : onChange;
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (isNumericMode(inputMode, type)) applyNumericFormat(event.target, inputMode);
+      if (!isControlled) setUncontrolledHasValue(event.target.value !== "");
+      onChange?.(event);
+    };
+
+    const handleClear = () => {
+      const el = innerRef.current;
+      if (el) {
+        // use the native setter so React's onChange fires with the empty value
+        const setter = Object.getOwnPropertyDescriptor(
+          window.HTMLInputElement.prototype,
+          "value",
+        )?.set;
+        setter?.call(el, "");
+        el.dispatchEvent(new Event("input", { bubbles: true }));
+        el.focus();
+      }
+      if (!isControlled) setUncontrolledHasValue(false);
+      onClear?.();
+    };
+
+    const showClear = clearable && hasValue && !disabled && !readOnly;
 
     return (
       <div
@@ -102,7 +164,7 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
             </span>
           )}
           <input
-            ref={ref}
+            ref={setRef}
             id={inputId}
             className={styles.input}
             disabled={disabled}
@@ -110,6 +172,8 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
             required={!optional}
             type={type}
             inputMode={domInputMode(inputMode)}
+            value={value}
+            defaultValue={defaultValue}
             onChange={handleChange}
             placeholder={effectivePlaceholder}
             aria-invalid={hasError || undefined}
@@ -123,6 +187,18 @@ export const TextFieldSmall = forwardRef<HTMLInputElement, TextFieldSmallProps>(
           )}
           {trailingAdornment != null && (
             <span className={styles.trailing}>{trailingAdornment}</span>
+          )}
+          {showClear && (
+            <span className={styles.trailing}>
+              <button
+                type="button"
+                className={styles.clearButton}
+                aria-label="پاک کردن"
+                onClick={handleClear}
+              >
+                <ClearIcon />
+              </button>
+            </span>
           )}
         </div>
         {message != null && (
