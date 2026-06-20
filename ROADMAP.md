@@ -57,18 +57,13 @@ A component is only "done" once it has been **built** (its `.tsx` + `.module.css
 exported from `src/index.ts`, semantic tokens + logical CSS only, Radix only where needed) and
 then passed **all three** steps, in order:
 
-1. **Review & polish against Figma.** Open the component's Figma source (`figma_key` in the
-   docs catalog — Swiss Army: `design-system/components/_index.md`; Zhina:
-   `ui-kits/zhina-kit.md`), compare it to the built component, and polish until it matches.
-   **Then ask the user whether they see any visual difference** — do not sign the component
-   off until they confirm it matches.
-2. **Add it to Storybook.** Stories covering every state × the 3 product themes × RTL/LTR,
-   plus `play`-function interaction tests (a11y addon clean).
-3. **Write its Overview.** An `Overview` MDX docs page in Storybook (the pattern in
-   `Button.mdx` → `Components/<Name> ▸ Overview`).
+1. **Review & polish against Figma** — and **ask the user whether they see any visual difference**
+   before signing it off.
+2. **Add it to Storybook** — stories for every state × 3 themes × RTL/LTR, plus `play` tests.
+3. **Write its Overview** — an `Overview` MDX docs page.
 
-> Tip: `pnpm storybook` exposes the Storybook **MCP** — call `get-documentation` /
-> `get-storybook-story-instructions` to keep stories + Overview consistent with the rest.
+The operational details of all three steps (scaffold, Figma tooling, the Haiku-authored Overview,
+verification) live in the **`/new-component` skill** — use it to build a component.
 
 ### Part A — Swiss Army (do first)
 
