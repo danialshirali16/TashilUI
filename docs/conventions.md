@@ -9,7 +9,8 @@ library has settled on. Read the section relevant to what you're building.
 
 1. Read the spec doc in `../Tashilcar/design-system/components/<name>.md` (variants, anatomy,
    **Tokens used**, RTL notes) — and grep `src/styles/themes/*.css` for the exact token names
-   available.
+   available. (If the docs repo isn't present, skip it and build from Figma — see
+   CLAUDE.md "Working without the docs repo".)
 2. Choose pure-CSS vs a Radix primitive (see the table in [ROADMAP.md](../ROADMAP.md)).
 3. Build `.module.css` with semantic tokens + logical props; map Radix `[data-state]` /
    `[data-disabled]` attributes to styles.

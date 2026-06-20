@@ -10,6 +10,21 @@ small files shipped to the browser.
 `tashilcar-docs` and opens a review PR; a drift-check CI there fails if docs fall behind. Don't
 pull tokens back from docs.
 
+### Working without the docs repo (read this before touching the docs link)
+
+The `tashilcar-docs` project is an **optional sibling checkout** (`../Tashilcar`), used only as a
+design reference + token consumer. **This repo is fully self-contained without it.** If it's
+absent — which is normal, e.g. you have no access to it — then:
+
+- **Don't** recreate it, clone it, edit `scripts/sync-docs.mjs`, or change the token flow to
+  work around its absence. `sync-docs` already fails safe (it just errors if the repo is missing).
+- **Never reverse the token flow.** Tokens are authored here and flow one-way OUT. Do not pull,
+  copy, or sync tokens *back* from docs, ever.
+- Run `pnpm sync-docs` **only when the user explicitly asks** — never proactively.
+- When a component spec doc (`../Tashilcar/design-system/components/<name>.md`) isn't reachable,
+  just build from the **Figma link/screenshot** the user provides. The spec doc is a convenience,
+  not a requirement — Figma is the ultimate source.
+
 ## Rules every change MUST follow
 
 1. **Semantic tokens only — never hardcode.** No hex, rgb, raw px/ms, or font sizes in

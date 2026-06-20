@@ -19,6 +19,9 @@ The component name and (usually) a Figma URL come from the user. If no Figma URL
    patterns.
 2. Read the spec: `../Tashilcar/design-system/components/<name>.md` (variants, anatomy, **Tokens
    used**, RTL notes). Grep `src/styles/themes/*.css` for the exact token names available.
+   *If the docs repo isn't present, skip this — build from the Figma link/screenshot instead, and
+   don't try to recreate the docs repo or change the token flow (see CLAUDE.md "Working without
+   the docs repo").*
 3. Decide pure-CSS vs Radix (table in [ROADMAP.md](../../../ROADMAP.md)). Pull Radix per-component
    only when accessibility/interaction demands it.
 4. Create the files under `src/components/<Name>/`: `<Name>.tsx`, `<Name>.module.css`, `index.ts`,
