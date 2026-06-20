@@ -1,0 +1,93 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as RadioGroupStories from "./RadioGroup.stories";
+
+<Meta of={RadioGroupStories} name="Overview" />
+
+# RadioGroup
+
+A labelled set of **RadioButton**s with a shared title, layout, status, and error message. Use it for a single question with one answer (e.g. «جنسیت»). For one standalone toggle, use **Checkbox**; for independent on/off choices use **CheckboxGroup**.
+
+## Anatomy
+
+A `title` (group label) + the RadioButtons + an optional helper / error `message`. The group status — `error`, `disabled`, `readOnly` — is set **once on the group** and propagated to every child.
+
+<Canvas of={RadioGroupStories.Vertical} />
+
+> **Children must be `RadioButton` elements directly** (not wrapped in another component), so the group can inject status into each one:
+>
+> ```tsx
+> <RadioGroup title="جنسیت" defaultValue="1">
+>   <RadioButton value="1" label="گزینه اول" />
+>   <RadioButton value="2" label="گزینه دوم" />
+> </RadioGroup>
+> ```
+
+## Layout (`type`)
+
+Three layouts mirror the Figma `Type` axis:
+
+- **vertical** — title above, radios stacked. The default; best for most forms.
+- **input** — title above, radios in a wrapping row. For a few short options on one line.
+- **inline** — title and radios on a single line. Compact, for toolbars / filter bars.
+
+<Canvas of={RadioGroupStories.Input} />
+<Canvas of={RadioGroupStories.Inline} />
+
+## Optional label
+
+Set `optional` to show «(اختیاری)» after the title, styled to match the title exactly.
+
+<Canvas of={RadioGroupStories.Optional} />
+
+## Helper and error messages
+
+The group renders a message below the radios:
+
+### Helper text
+
+Pass `helperText` (always shown) to provide context or guidance.
+
+<Canvas of={RadioGroupStories.WithHelper} />
+
+### Error message
+
+Pass `error` (a string or ReactNode) to render an error state: each radio turns to the error ramp, the message appears in red, and the group gets `aria-invalid` and is described by the message. Error takes priority over `helperText`.
+
+<Canvas of={RadioGroupStories.Error} />
+
+## Status
+
+Set the status on the group; every child follows (child-level props still win).
+
+### Disabled
+
+Disables every radio in the group and mutes the title.
+
+<Canvas of={RadioGroupStories.Disabled} />
+
+### Read-only
+
+Shows the values without allowing edits (rings muted, removed from tab order).
+
+<Canvas of={RadioGroupStories.ReadOnly} />
+
+## Direction
+
+Radix RadioGroup.Root stamps `dir="ltr"` by default, which would override the page's RTL. The RadioGroup component resolves the ambient direction from its parent (honouring the page's default RTL), and you can override with an explicit `dir` prop if needed.
+
+## Accessibility
+
+- **Grouping** — renders `role="radiogroup"` with `aria-labelledby` pointing at the title, so assistive tech announces the options as one labelled set.
+- **Navigation** — Radix provides roving focus and arrow-key navigation: arrow keys move between radios, `Space` toggles the current selection.
+- **Error** — `aria-invalid` on the group + `aria-describedby` to the `role="alert"` error message (when present).
+- **Status propagation** — each child RadioButton keeps its own Radix semantics (`Space` toggles, `aria-checked`, focus ring); the group only injects the shared status.
+
+## Token-driven styling
+
+Title uses `text/subtler`, the error message `text/error/default` at the caption scale, and the gaps are `--space-12` (vertical) / `--space-16` (rows) — all semantic tokens, so themes switch with no component changes.
+
+## API reference
+
+<Controls of={RadioGroupStories.Vertical} />
+
+<ArgTypes of={RadioGroupStories.default} />

@@ -27,6 +27,12 @@ export type { CheckboxProps } from "./components/Checkbox";
 export { CheckboxGroup } from "./components/CheckboxGroup";
 export type { CheckboxGroupProps } from "./components/CheckboxGroup";
 
+export { RadioButton } from "./components/RadioButton";
+export type { RadioButtonProps } from "./components/RadioButton";
+
+export { RadioGroup } from "./components/RadioGroup";
+export type { RadioGroupProps } from "./components/RadioGroup";
+
 export { Modal, ModalClose } from "./components/Modal";
 export type { ModalProps } from "./components/Modal";
 

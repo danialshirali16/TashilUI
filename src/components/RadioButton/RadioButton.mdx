@@ -1,0 +1,78 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as RadioButtonStories from "./RadioButton.stories";
+
+<Meta of={RadioButtonStories} name="Overview" />
+
+# RadioButton
+
+A single radio option built on Radix RadioGroup (focus, keyboard, ARIA) + our CSS. Matches the Swiss Army Figma: 18px ring, 8px dot, statuses default / error / read-only / disabled. **RadioButton must be rendered inside a `RadioGroup`** — radios are inherently grouped, and Radix provides the selection context.
+
+## When to use
+
+- **Mutually exclusive choices** — one answer from several (e.g. «جنسیت»).
+- **Single-selection groups** — when the user picks one option at a time; for independent on/off toggles use **Checkbox**.
+- Always inside a **RadioGroup** — never standalone. The group handles layout, labelling, status, and error messages.
+
+## Anatomy
+
+An 18px ring (Figma `RadioButton/base`) + an optional label. In RTL the ring sits inline-start (visually right) and the label follows; the indicator is an 8px white dot (visible when selected).
+
+<Canvas of={RadioButtonStories.Selected} />
+
+## States (selection)
+
+The Radix `checked` state drives the fill and indicator visibility:
+
+<Canvas of={RadioButtonStories.Unselected} />
+
+- **Unselected** — empty ring with a neutral border, no indicator.
+- **Selected** — filled with the product `primary` color, white 8px dot.
+
+## Status
+
+The `status` axis maps to props: default, `error`, `readOnly`, and `disabled`. Each has its own idle / hover / pressed colors and a hover "shadow" ring, all from design tokens.
+
+<Canvas of={RadioButtonStories.AllStates} />
+
+### Error
+
+Set `error` for invalid required radios (e.g. a selection that violates a form rule on submit). The ring border / fill turns to the `error` ramp; pairs with `aria-invalid`.
+
+<Canvas of={RadioButtonStories.Error} />
+
+### Optional label
+
+Set `optional` to show «(اختیاری)» after the label, styled to match the label exactly.
+
+<Canvas of={RadioButtonStories.Optional} />
+
+### Read-only
+
+Set `readOnly` to **show** a value without allowing edits. Unlike disabled, it isn't greyed out — the ring stays white with a muted dot and is removed from the tab order.
+
+<Canvas of={RadioButtonStories.ReadOnly} />
+
+### Disabled
+
+<Canvas of={RadioButtonStories.Disabled} />
+
+## Label association
+
+Passing `label` wires `htmlFor`/`id` automatically (or pass your own `id`); clicking the label toggles the radio. Without a label, provide an `aria-label` at the group level (via the `RadioGroup` component).
+
+## Accessibility
+
+- **Semantics & keyboard** — Radix renders a real radio button: arrow keys navigate the group, `Space` toggles the selected radio, focus is visible, and the state is announced (`aria-checked`).
+- **Label wiring** — `label` prop wires `htmlFor`/`id` automatically; clicking the label toggles the radio.
+- **Error** — `error` sets `aria-invalid`; the `RadioGroup` renders an error message paired with `aria-describedby`.
+- **Read-only** — sets `aria-readonly` and removes the control from the tab order (via `disabled` for native consistency).
+
+## Token-driven styling
+
+Every color, size, border, and motion value is a semantic token — no hardcoded values. The ring is `--space-18`, the indicator `--space-8`, and the status colors come from the `background/*`, `border/*`, and `icon/*` ramps, so themes switch with no component changes.
+
+## API reference
+
+<Controls of={RadioButtonStories.Selected} />
+
+<ArgTypes of={RadioButtonStories.default} />

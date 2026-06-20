@@ -1,0 +1,138 @@
+/* RadioButton — mirrors Swiss Army Figma (RadioButton/base + RadioButton).
+ * Like Checkbox but circular with an inner dot: 18px ring, 8px dot. Axes:
+ * data-state (Radix: unchecked/checked) × status (default / [data-error] /
+ * [data-readonly] / [data-disabled]) × interaction (idle / :hover / :active). */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-family);
+  cursor: pointer;
+}
+.wrapper[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* ── ring (RadioButton/base) ───────────────────────────────── */
+.radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--space-18);
+  block-size: var(--space-18);
+  flex: 0 0 auto;
+  padding: 0;
+  background-color: var(--color-background-input);
+  border: var(--border-width-default) solid var(--color-border-input-default);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+
+.radio:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-selected-default);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* the Figma "HoverShadow" — a 2px ring around the control on hover */
+.radio:hover:not([data-disabled]):not([data-readonly]) {
+  border-color: var(--color-border-input-hover);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-input-shadow);
+}
+.radio:active:not([data-disabled]):not([data-readonly]) {
+  border-color: var(--color-border-selected-default);
+  box-shadow: none;
+}
+
+/* ── checked — primary fill ────────────────────────────────── */
+.radio[data-state="checked"] {
+  background-color: var(--color-background-primary-default);
+  border-color: var(--color-background-primary-default);
+}
+.radio[data-state="checked"]:hover:not([data-disabled]):not([data-readonly]) {
+  background-color: var(--color-background-primary-hover);
+  border-color: var(--color-background-primary-hover);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-selected-shadow);
+}
+.radio[data-state="checked"]:active:not([data-disabled]):not([data-readonly]) {
+  background-color: var(--color-background-primary-pressed);
+  border-color: var(--color-background-primary-pressed);
+}
+
+/* ── Error status ──────────────────────────────────────────── */
+.radio[data-error] {
+  border-color: var(--color-border-error-default);
+}
+.radio[data-error]:hover:not([data-disabled]):not([data-readonly]) {
+  border-color: var(--color-border-error-default);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-error-subtle);
+}
+.radio[data-error]:active:not([data-disabled]):not([data-readonly]) {
+  border-color: var(--color-border-error-bold);
+  box-shadow: none;
+}
+.radio[data-error][data-state="checked"] {
+  background-color: var(--color-background-error-bold-default);
+  border-color: var(--color-border-error-default);
+}
+.radio[data-error][data-state="checked"]:hover:not([data-disabled]):not([data-readonly]) {
+  background-color: var(--color-background-error-bold-hover);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-error-subtle);
+}
+.radio[data-error][data-state="checked"]:active:not([data-disabled]):not([data-readonly]) {
+  background-color: var(--color-background-error-bold-pressed);
+}
+
+/* ── Read-Only — non-interactive, keeps its own (non-grey) look ─ */
+.radio[data-readonly] {
+  pointer-events: none;
+  box-shadow: none;
+}
+.radio[data-readonly][data-state="checked"] {
+  background-color: var(--color-background-input);
+  border-color: var(--color-border-input-default);
+}
+
+/* ── Disabled (wins over checked/error fills) ──────────────── */
+.radio[data-disabled]:not([data-readonly]) {
+  cursor: not-allowed;
+  background-color: var(--color-background-disable);
+  border-color: var(--color-border-disable);
+  box-shadow: none;
+}
+
+/* ── inner dot (8px) ───────────────────────────────────────── */
+.indicator {
+  inline-size: var(--space-8);
+  block-size: var(--space-8);
+  border-radius: 50%;
+  background-color: var(--color-icon-oncolor-default);
+  pointer-events: none;
+}
+.radio[data-disabled]:not([data-readonly]) .indicator {
+  background-color: var(--color-icon-disable);
+}
+.radio[data-readonly] .indicator {
+  background-color: var(--color-icon-subtler);
+}
+
+/* ── label ─────────────────────────────────────────────────── */
+.label {
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-subtle);
+  cursor: inherit;
+}
+.wrapper[data-disabled] .label {
+  color: var(--color-text-disable);
+}
+
+/* «(اختیاری)» marker — inherits the label's color/size so it matches exactly */
+.optionalTag {
+  margin-inline-start: var(--space-2);
+  color: inherit;
+  font: inherit;
+}

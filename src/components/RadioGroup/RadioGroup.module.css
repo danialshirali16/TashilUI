@@ -1,0 +1,68 @@
+/* RadioGroup — mirrors Swiss Army Figma `RadioGroup`.
+ * Title + a set of RadioButtons (vertical / input / inline) + a helper/error
+ * message. Status (error/disabled/read-only) is applied per child in the TS. */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  font-family: var(--font-family);
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.title {
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-subtler);
+}
+.group[data-disabled] .title {
+  color: var(--color-text-disable);
+}
+
+/* «(اختیاری)» marker — inherits the title's color/size so it matches exactly */
+.optionalTag {
+  margin-inline-start: var(--space-2);
+  color: inherit;
+  font: inherit;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+/* `input` + `inline` lay the radios out in a wrapping row */
+.items.row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+/* `inline` puts the title and the items on one line */
+.inlineRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+}
+.inlineRow .items.row {
+  flex: 1 1 auto;
+}
+
+.message {
+  margin: 0;
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  color: var(--color-text-subtler);
+  text-align: start;
+}
+.group[data-status="error"] .message {
+  color: var(--color-text-error-default);
+}
+.group[data-disabled] .message {
+  color: var(--color-text-disable);
+}
