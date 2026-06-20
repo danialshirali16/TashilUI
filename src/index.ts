@@ -18,6 +18,9 @@ export type { TextAreaProps } from "./components/TextArea";
 export { TextFieldSmall } from "./components/TextFieldSmall";
 export type { TextFieldSmallProps } from "./components/TextFieldSmall";
 
+export { OTPField } from "./components/OTPField";
+export type { OTPFieldProps } from "./components/OTPField";
+
 export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 

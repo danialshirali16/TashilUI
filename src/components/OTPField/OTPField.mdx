@@ -1,0 +1,84 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as OTPFieldStories from "./OTPField.stories";
+
+<Meta of={OTPFieldStories} name="Overview" />
+
+# OTPField
+
+A segmented one-time-code input — a row of equal square cells, each a single-character input — for SMS, email, or 2FA verification codes. Built with pure CSS, semantic tokens, and full RTL support. The code is entered left-to-right with auto-advance, backspace navigation, click-to-edit any cell, and full-code paste.
+
+## When to use
+
+- **Verification codes** — collect SMS, email, or app-generated OTP codes.
+- **Two-factor authentication (2FA)** — PIN or code entry for account security.
+- **Numeric PIN entry** — any fixed-length numeric secret code.
+
+## Anatomy & length
+
+The field renders a row of equal square cells, each one a single-character input. The number of cells is set via the `length` prop and is **clamped to 4–6** (default 5). Adjust the control below to see the layout adapt:
+
+<Canvas of={OTPFieldStories.Default} />
+<Canvas of={OTPFieldStories.ConfigurableLength} />
+
+## Entry & keyboard
+
+Code is entered **left-to-right**; the cell row is always LTR, even inside RTL layouts. As you type a digit in a cell, it **auto-advances** to the next empty cell. **Backspace** clears the current cell (or steps back and clears the previous cell if the current one is already empty). **Arrow Left** and **Arrow Right** navigate between cells. **Click any filled cell** to focus and edit it in place; the digit is automatically selected so typing replaces it. **Paste** a full code into any cell — it distributes the digits across the remaining cells.
+
+<Canvas of={OTPFieldStories.Filled} />
+
+## Numeric input
+
+Numeric by default (`inputMode="numeric"`). Persian and Arabic-Indic digits (`۰۱۲۳۴۵۶۷۸۹` and `٠١٢٣٤٥٦٧٨٩`) are normalized to ASCII (`0123456789`) as you type, and any non-digit input is dropped. This keeps the field's value machine-readable for submission while users can type in their native numerals. Thanks to the Yekan Bakh FaNum font, the ASCII value still displays as Persian numerals to the user. The `inputMode` prop is configurable if you need a different virtual-keyboard hint.
+
+## Value & completion
+
+The field is **controlled** (set `value` + `onChange(value: string)`) or **uncontrolled** (set `defaultValue`). The `onComplete(value)` callback fires once all cells are filled with a digit.
+
+<Canvas of={OTPFieldStories.Controlled} />
+<Canvas of={OTPFieldStories.Complete} />
+
+## Helper text
+
+The `helperText` prop renders descriptive text below the field. Use it to clarify instructions or code format.
+
+<Canvas of={OTPFieldStories.WithHelper} />
+
+## Error status
+
+Set the `error` prop with an error message to mark the field as invalid. The cell borders turn red and the field gets `aria-invalid="true"`.
+
+<Canvas of={OTPFieldStories.WithError} />
+
+## Read-only
+
+Set `readOnly` to show a code without allowing edits. The field uses the native `readonly` attribute and stays visually normal (not greyed out). It remains focusable.
+
+<Canvas of={OTPFieldStories.ReadOnly} />
+
+## Disabled
+
+Set `disabled` to grey out the field and prevent all interaction. The cells, text, and any message use the disabled color ramp.
+
+<Canvas of={OTPFieldStories.Disabled} />
+
+## Optional vs. required
+
+By default, the field is **required** (the native `required` attribute is set on the first cell). Set the `optional` prop to remove the `required` attribute. This field has no label or placeholder text, so there is no visible "(اختیاری)" marker.
+
+## Accessibility
+
+- **Cell labels** — each cell has an `aria-label` like "رقم 1 از 5" (digit 1 of 5) to help screen-reader users identify which cell they're in.
+- **Error** — `error` sets `aria-invalid="true"` and `aria-describedby` to link the message.
+- **Helper / error messages** — `aria-describedby` connects the input to the message so screen readers announce it.
+- **Autofill** — the first cell has `autocomplete="one-time-code"` so the OS can offer to fill the entire field from an SMS message.
+- **Disabled** — the standard `disabled` attribute prevents all interaction.
+
+## Token-driven styling
+
+All colors, borders, and sizes are semantic tokens — **no hardcoded values**. Each cell is `56px` square (`--space-56`), the border is `1.5px` (from the Figma spec; no design token exists), the gap between cells is `8px` (`--space-8`), and digits are rendered at `--font-size-headline-md` in bold. Status colors come from the `border/*`, `background/*`, and `text/*` ramps. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={OTPFieldStories.Default} />
+
+<ArgTypes of={OTPFieldStories.default} />

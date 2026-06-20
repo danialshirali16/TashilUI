@@ -1,0 +1,93 @@
+/* OTPField — mirrors Swiss Army Figma (segmented one-time-code input).
+ * A row of equal square cells, each its own one-char input. Filled cells show
+ * the digit (Headline/md); the focused cell shows the selection ring + caret.
+ * Status: default / [data-status="error"] / [data-readonly] / [data-disabled]. */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-family: var(--font-family);
+  inline-size: 100%;
+}
+
+/* ── control: the cell row ─────────────────────────────────── */
+.control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  inline-size: 100%;
+  /* code is entered left-to-right regardless of the surrounding RTL context */
+  direction: ltr;
+}
+
+/* ── cells (each an input) ─────────────────────────────────── */
+.cell {
+  flex: 1 1 0;
+  inline-size: 0;
+  min-inline-size: 0;
+  block-size: var(--space-56);
+  padding: 0;
+  text-align: center;
+  background-color: var(--color-background-input);
+  border: 1.5px solid var(--color-border-input-default);
+  border-radius: var(--radius-4);
+  font-family: inherit;
+  font-size: var(--font-size-headline-md);
+  line-height: var(--line-height-headline-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-subtle);
+  caret-color: var(--color-icon-primary-default);
+  outline: none;
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+
+/* hover (whole field) — exclude the focused cell so its focus ring isn't
+ * overridden by this higher-specificity rule (matters on touch devices, where
+ * tapping leaves a sticky :hover on the row) */
+.control:hover .cell:not(:disabled):not(:focus) {
+  border-color: var(--color-border-input-hover);
+}
+
+/* focused cell */
+.cell:focus {
+  border-color: var(--color-border-selected-default);
+  box-shadow: none;
+}
+
+/* error */
+.field[data-status="error"] .cell {
+  border-color: var(--color-border-error-default);
+}
+.field[data-status="error"] .cell:focus {
+  border-color: var(--color-border-selected-default);
+}
+
+/* read-only — keep its own (non-grey) look */
+.field[data-readonly] .cell {
+  color: var(--color-text-subtler);
+}
+
+/* disabled */
+.field[data-disabled] .cell {
+  background-color: var(--color-background-disable);
+  border-color: var(--color-border-disable);
+  color: var(--color-text-disable);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ── message — flush, no inline padding ───────────────────── */
+.message {
+  margin: 0;
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  color: var(--color-text-subtler);
+  text-align: start;
+}
+.field[data-status="error"] .message {
+  color: var(--color-text-error-default);
+}
+.field[data-disabled] .message {
+  color: var(--color-text-disable);
+}
