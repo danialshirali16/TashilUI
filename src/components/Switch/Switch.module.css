@@ -1,0 +1,98 @@
+/* Switch — mirrors Swiss Army Figma `Switch` (Size=Small).
+ * A 36×20 pill toggle: off = white track + grey thumb at inline-start; on =
+ * primary track + white thumb at inline-end. The thumb is positioned with
+ * logical `inset-inline-start` so it flips correctly in RTL. */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-family);
+  cursor: pointer;
+}
+.wrapper[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* ── track (Switch.Root) ───────────────────────────────────── */
+.switch {
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: 36px;
+  block-size: var(--space-20);
+  padding: 0;
+  background-color: var(--color-background-input);
+  border: var(--border-width-default) solid var(--color-border-input-default);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease, opacity var(--duration-fast) ease;
+}
+
+.switch:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-border-selected-default);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.switch:hover:not(:disabled) {
+  border-color: var(--color-border-input-hover);
+}
+.switch:active:not(:disabled) {
+  border-color: var(--color-border-selected-default);
+}
+
+/* ── on (checked) ──────────────────────────────────────────── */
+.switch[data-state="checked"] {
+  background-color: var(--color-background-selected-default);
+  border-color: var(--color-background-selected-default);
+}
+.switch[data-state="checked"]:hover:not(:disabled) {
+  background-color: var(--color-background-primary-hover);
+  border-color: var(--color-background-primary-hover);
+}
+.switch[data-state="checked"]:active:not(:disabled) {
+  background-color: var(--color-background-primary-pressed);
+  border-color: var(--color-background-primary-pressed);
+}
+
+/* ── disabled (faded, per Figma layer opacity) ─────────────── */
+/* read-only is also inert (Radix-disabled) but must keep its full-colour look,
+ * so the faded style is scoped to :not([data-readonly]). */
+.switch:disabled:not([data-readonly]) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.switch[data-readonly] {
+  cursor: default;
+}
+
+/* ── thumb (Switch.Thumb) ──────────────────────────────────── */
+.thumb {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: var(--space-4);
+  inline-size: var(--space-12);
+  block-size: var(--space-12);
+  transform: translateY(-50%);
+  border-radius: var(--radius-full);
+  background-color: var(--color-icon-placeholder);
+  transition: inset-inline-start var(--duration-fast) ease,
+    background-color var(--duration-fast) ease;
+  pointer-events: none;
+}
+/* travel: track(36) − thumb(12) − start gap(4) = 20px from inline-start */
+.thumb[data-state="checked"] {
+  inset-inline-start: 20px;
+  background-color: var(--color-icon-oncolor-default);
+}
+
+/* ── label ─────────────────────────────────────────────────── */
+.label {
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-subtle);
+  cursor: inherit;
+}
+.wrapper[data-disabled] .label {
+  color: var(--color-text-disable);
+}

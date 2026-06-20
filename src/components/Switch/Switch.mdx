@@ -1,0 +1,93 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as SwitchStories from "./Switch.stories";
+
+<Meta of={SwitchStories} name="Overview" />
+
+# Switch
+
+A toggle switch built on Radix Switch for **instant on/off settings** (e.g. notifications, dark mode,
+feature flags). Matches the Swiss Army Figma: 36×20 pill, 12px thumb, off = grey thumb on a white
+track, on = white thumb on a primary track. Pure CSS, semantic tokens, RTL-aware.
+
+## When to use
+
+- **Instant settings** — toggles that apply immediately (notifications, dark mode, WiFi on/off).
+- **Not form submission** — Switch changes take effect at once; use **Checkbox** for selections
+  that are submitted with a form.
+- **Boolean states only** — for three or more options, use Radio or Select.
+- **vs Checkbox** — both are binary, but Switch implies "this setting is live now"; Checkbox is
+  part of a form that you'll submit later.
+
+## Off and On
+
+The switch is **uncontrolled by default** via `defaultChecked`, or **controlled** with `checked`
+and `onCheckedChange`:
+
+<Canvas of={SwitchStories.Off} />
+
+<Canvas of={SwitchStories.On} />
+
+```tsx
+// Uncontrolled
+<Switch defaultChecked={true} />
+
+// Controlled
+const [isOn, setIsOn] = useState(false);
+<Switch checked={isOn} onCheckedChange={setIsOn} />
+```
+
+## Label
+
+Pass `label` to render text next to the toggle (inline-start in LTR, inline-end in RTL):
+
+<Canvas of={SwitchStories.WithLabel} />
+
+The label is wired via `htmlFor`/`id` automatically, so clicking it toggles the switch.
+
+## Disabled vs Read-Only
+
+Both states make the switch inert (can't toggle), but differ in appearance:
+
+<Canvas of={SwitchStories.Disabled} />
+
+<Canvas of={SwitchStories.ReadOnly} />
+
+- **Disabled** (`disabled`) — faded (50% opacity), removed from tab order. Use when the setting
+  doesn't apply.
+- **Read-only** (`readOnly`) — full colour, removed from tab order. Use when you want to **show**
+  a value the user can't change (e.g. a system-controlled setting).
+
+Both are implemented via Radix's `disabled` under the hood — they're genuinely non-interactive
+and announced correctly to assistive tech.
+
+## States overview
+
+A quick survey of all combinations:
+
+<Canvas of={SwitchStories.States} />
+
+## RTL
+
+The thumb travels via logical CSS (`inset-inline-start`), so in RTL the off thumb sits on the
+right and slides left when on. No extra configuration needed.
+
+## Accessibility
+
+- **Semantics** — Radix renders `role="switch"` and `aria-checked` (true/false/mixed).
+- **Keyboard** — `Space` or `Enter` toggles the switch; focus is visible.
+- **Label** — passing `label` wires `htmlFor`/`id` (or pass your own `id`); clicking the label
+  toggles the switch. Without a label, provide `aria-label`.
+- **Read-only** — sets `aria-readonly` and removes from tab order.
+
+## Token-driven styling
+
+Every colour, size, border, and motion value is a semantic token — no hardcoded values. The
+track is 36×20 with `--radius-full`, the thumb is 12px, and the on-track colour is
+`--color-background-selected-default`, off-thumb is `--color-icon-placeholder`, on-thumb is
+`--color-icon-oncolor-default`. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={SwitchStories.Off} />
+
+<ArgTypes of={SwitchStories.default} />

@@ -33,6 +33,9 @@ export type { RadioButtonProps } from "./components/RadioButton";
 export { RadioGroup } from "./components/RadioGroup";
 export type { RadioGroupProps } from "./components/RadioGroup";
 
+export { Switch } from "./components/Switch";
+export type { SwitchProps } from "./components/Switch";
+
 export { Modal, ModalClose } from "./components/Modal";
 export type { ModalProps } from "./components/Modal";
 
