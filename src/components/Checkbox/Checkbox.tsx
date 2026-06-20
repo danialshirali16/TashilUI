@@ -12,6 +12,8 @@ export interface CheckboxProps
   error?: boolean;
   /** Read-only — value is shown but not editable (Figma `Status=Read-Only`). */
   readOnly?: boolean;
+  /** Show «(اختیاری)» after the label, styled like the label. */
+  optional?: boolean;
 }
 
 /* 12px glyphs (Figma Check / Minus), drawn on a 12 viewBox. */
@@ -41,7 +43,10 @@ const IndeterminateIcon = () => (
 export const Checkbox = forwardRef<
   ElementRef<typeof RadixCheckbox.Root>,
   CheckboxProps
->(function Checkbox({ label, id, className, error, readOnly, disabled, ...rest }, ref) {
+>(function Checkbox(
+  { label, id, className, error, readOnly, disabled, optional, ...rest },
+  ref,
+) {
   const autoId = useId();
   const checkboxId = id ?? autoId;
   const box = (
@@ -72,6 +77,7 @@ export const Checkbox = forwardRef<
       {box}
       <label className={styles.label} htmlFor={checkboxId}>
         {label}
+        {optional && <span className={styles.optionalTag}>(اختیاری)</span>}
       </label>
     </span>
   );

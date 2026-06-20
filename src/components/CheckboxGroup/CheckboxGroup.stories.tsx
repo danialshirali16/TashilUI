@@ -42,6 +42,12 @@ export const Error: Story = {
   render: (args) => <CheckboxGroup {...args}>{items()}</CheckboxGroup>,
 };
 
+/** Optional — «(اختیاری)» appears after the title, styled like the title. */
+export const Optional: Story = {
+  args: { optional: true },
+  render: (args) => <CheckboxGroup {...args}>{items()}</CheckboxGroup>,
+};
+
 export const Disabled: Story = {
   args: { disabled: true },
   render: (args) => <CheckboxGroup {...args}>{items()}</CheckboxGroup>,

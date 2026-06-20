@@ -142,3 +142,10 @@
 .wrapper[data-disabled] .label {
   color: var(--color-text-disable);
 }
+
+/* «(اختیاری)» marker — inherits the label's color/size so it matches exactly */
+.optionalTag {
+  margin-inline-start: var(--space-2);
+  color: inherit;
+  font: inherit;
+}

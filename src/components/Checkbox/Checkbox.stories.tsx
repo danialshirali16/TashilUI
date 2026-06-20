@@ -39,6 +39,9 @@ export const Indeterminate: Story = {
 
 export const WithoutLabel: Story = { args: { label: undefined } };
 
+/** Optional — «(اختیاری)» appears after the label, styled like the label. */
+export const Optional: Story = { args: { optional: true } };
+
 export const Error: Story = {
   render: (args) => (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

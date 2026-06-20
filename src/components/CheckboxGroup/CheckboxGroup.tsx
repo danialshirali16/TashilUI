@@ -23,6 +23,8 @@ export interface CheckboxGroupProps
   disabled?: boolean;
   /** Make every checkbox read-only. */
   readOnly?: boolean;
+  /** Show «(اختیاری)» after the title, styled like the title. */
+  optional?: boolean;
 }
 
 /**
@@ -35,7 +37,7 @@ export interface CheckboxGroupProps
  */
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
   function CheckboxGroup(
-    { title, type = "vertical", message, error, disabled, readOnly, className, children, ...rest },
+    { title, type = "vertical", message, error, disabled, readOnly, optional, className, children, ...rest },
     ref,
   ) {
     const titleId = useId();
@@ -54,6 +56,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       title != null ? (
         <span id={titleId} className={styles.title}>
           {title}
+          {optional && <span className={styles.optionalTag}>(اختیاری)</span>}
         </span>
       ) : null;
 
