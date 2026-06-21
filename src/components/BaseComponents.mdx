@@ -1,0 +1,111 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as InputChipStories from "./InputChip/InputChip.stories";
+import * as InputChipsStories from "./InputChips/InputChips.stories";
+import * as InputFilePreviewStories from "./InputFilePreview/InputFilePreview.stories";
+
+<Meta title="Base Components/Overview" />
+
+# Base Components
+
+**Base Components** are atomic, internal building blocks for future Input components (chips,
+multi-select, file-upload). They are not standalone UI controls — they render only within the
+context of a larger Input component. All three are built with pure CSS, semantic tokens, and
+RTL-first design.
+
+## InputChip
+
+A single removable chip: a label pill with an optional remove ✕ button. The component is **controlled**
+— the remove button fires `onRemove`, and the parent owns the list. Supports a `limited` variant
+that renders as «`{count}`+» to show overflow counts.
+
+**When to use:**
+- Rendering individual tags or selections within a multi-select or chip-group Input.
+- Displaying an overflow indicator («+N») when space is constrained.
+
+**Figma reference:** `Inputs/base/Chips`
+
+<Canvas of={InputChipStories.AllStates} />
+
+<Canvas of={InputChipStories.Limited} />
+
+<Controls of={InputChipStories.Tag} />
+
+<ArgTypes of={InputChipStories.Tag} />
+
+## InputChips
+
+A horizontal row of `InputChip` components with a fixed 2px gap and an optional trailing overflow
+indicator. This is the layout atom for multi-select and chip-group Inputs.
+
+**When to use:**
+- Laying out multiple chips in a single line.
+- Showing an overflow count («+N») when the full list doesn't fit.
+
+**Figma reference:** `Inputs/elements/Chips`
+
+<Canvas of={InputChipsStories.Default} />
+
+<Canvas of={InputChipsStories.WithOverflow} />
+
+<Canvas of={InputChipsStories.Removable} />
+
+<Controls of={InputChipsStories.Default} />
+
+<ArgTypes of={InputChipsStories.Default} />
+
+## InputFilePreview
+
+A neutral thumbnail for an uploaded file. Renders a white folded-corner sheet with a type-specific
+glyph (image, PDF, or generic file), tinted with the corresponding semantic colour. Available in
+two sizes: large (225×135) for thumbnail previews and small (40×40) for chip-like display. The
+component is decorative by default and conveys meaning only through its semantic label.
+
+**When to use:**
+- Showing a preview of an uploaded file in a file-upload Input.
+- Displaying file type at a glance without relying on icons alone.
+
+**Figma reference:** `base/File_Preview`
+
+<Canvas of={InputFilePreviewStories.AllVariants} />
+
+<Controls of={InputFilePreviewStories.Image} />
+
+<ArgTypes of={InputFilePreviewStories.Image} />
+
+## Accessibility
+
+**InputChip:**
+- The remove ✕ is a real `<button>` element with a Persian `aria-label` («حذف»).
+- When `disabled` is set, the remove button is blocked and visually dimmed.
+- The chip itself is a container (`<div>`); focus and interaction are on the remove button only.
+
+**InputChips:**
+- A simple flex container; no ARIA roles needed. Semantics come from the child `InputChip` components.
+
+**InputFilePreview:**
+- Renders `role="img"` with a Persian `aria-label` describing the file type (e.g. «پیش‌نمایش تصویر» for images).
+- The folded-corner sheet and type glyphs are marked `aria-hidden="true"` (decorative).
+- Size and type are visual and semantic cues; no additional ARIA needed.
+
+## Token-driven styling
+
+All colors, spacing, radii, and typography use semantic tokens — no hardcoded values:
+
+- **Colors:** `var(--color-text-subtle)` / `var(--color-text-disable)` for chip text;
+  `var(--color-background-neutral-default)` / `--color-background-neutral-hover` /
+  `--color-background-disable` for the chip fill; `var(--color-icon-subtle)` /
+  `--color-icon-disable` for the ✕. `InputFilePreview` tints each glyph with its semantic
+  colour — `--color-border-primary-default` (image), `--color-background-accent-red-bold`
+  (PDF), `--color-icon-subtler` (file) — on a `--color-background-neutral-zero-default` sheet.
+- **Spacing:** `var(--space-*)` for padding, gap (`--space-8` inside a chip, `--space-2`
+  between chips), and the 24px chip height.
+- **Radius:** `var(--radius-4)` for chip and large-preview corners; `var(--radius-2)` for the
+  small preview.
+- **Typography:** `var(--font-family)` throughout; the chip label uses the `caption-md` scale
+  (`--font-size-caption-md` / `--line-height-caption-md`) and the «+N» indicator the `body-md`
+  scale.
+
+**Logical CSS:** All properties are logical (`padding-inline`, `inset-inline-start`,
+`text-align: start`) — never physical (`left`/`right`/`margin-left`). RTL is the default; LTR
+works via the `dir` attribute. The «+N» indicator is the one intentional exception, pinned
+`direction: ltr` so it always reads as a number followed by `+`.

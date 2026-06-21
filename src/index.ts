@@ -36,6 +36,20 @@ export type { RadioGroupProps } from "./components/RadioGroup";
 export { Switch } from "./components/Switch";
 export type { SwitchProps } from "./components/Switch";
 
+// Inputs — atomic sub-components used to compose the Input controls (not standalone).
+export { InputChip } from "./components/InputChip";
+export type { InputChipProps, InputChipVariant } from "./components/InputChip";
+
+export { InputChips } from "./components/InputChips";
+export type { InputChipsProps } from "./components/InputChips";
+
+export { InputFilePreview } from "./components/InputFilePreview";
+export type {
+  InputFilePreviewProps,
+  InputFilePreviewType,
+  InputFilePreviewSize,
+} from "./components/InputFilePreview";
+
 export { Modal, ModalClose } from "./components/Modal";
 export type { ModalProps } from "./components/Modal";
 

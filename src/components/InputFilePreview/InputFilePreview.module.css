@@ -1,0 +1,63 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-background-neutral-default);
+}
+
+.root[data-size="large"] {
+  inline-size: 225px;
+  block-size: 135px;
+  border-radius: var(--radius-4);
+}
+
+.root[data-size="small"] {
+  inline-size: var(--space-40);
+  block-size: var(--space-40);
+  border-radius: var(--radius-2);
+}
+
+/* White paper sheet (3:4). */
+.sheet {
+  position: absolute;
+  color: var(--color-background-neutral-zero-default);
+}
+
+.root[data-size="large"] .sheet {
+  inline-size: 72px;
+  block-size: 96px;
+}
+
+.root[data-size="small"] .sheet {
+  inline-size: var(--space-24);
+  block-size: var(--space-32);
+}
+
+/* Type glyph, centred on the sheet and tinted per file type. */
+.glyph {
+  position: relative;
+}
+
+.root[data-size="large"] .glyph {
+  inline-size: var(--space-40);
+  block-size: var(--space-40);
+}
+
+.root[data-size="small"] .glyph {
+  inline-size: var(--size-icon-sm);
+  block-size: var(--size-icon-sm);
+}
+
+.root[data-type="image"] .glyph {
+  color: var(--color-border-primary-default);
+}
+
+.root[data-type="pdf"] .glyph {
+  color: var(--color-background-accent-red-bold);
+}
+
+.root[data-type="file"] .glyph {
+  color: var(--color-icon-subtler);
+}
