@@ -99,8 +99,6 @@
 }
 .icon svg { inline-size: 100%; block-size: 100%; }
 
-.loading { pointer-events: none; }
-
 /* Loading (per Figma): label/icons stay laid out but invisible (width preserved),
  * spinner centered over the button. */
 .contentHidden { opacity: 0; }
@@ -138,8 +136,9 @@
   background-color: transparent;
 }
 
-/* Loading stays non-interactive but visually keeps its variant color. */
-.loading { cursor: default; }
+/* Loading stays non-interactive (clicks blocked in JS) but keeps its variant
+ * color and shows the busy cursor on hover. */
+.loading { cursor: progress; }
 
 /* ════════════════════════════════════════════════════════
  * SOLID — filled, white (oncolor) label

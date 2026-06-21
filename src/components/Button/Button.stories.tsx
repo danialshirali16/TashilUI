@@ -146,16 +146,17 @@ export const ClickFiresOnClick: Story = {
   },
 };
 
-/** A loading button is disabled and swallows clicks (no `onClick`). The loading
- *  button sets `pointer-events: none`, so bypass user-event's pointer guard
- *  (`pointerEventsCheck: 0`) to dispatch the click and prove it's still inert. */
+/** A loading button is aria-disabled + aria-busy (not natively disabled, so it
+ *  still receives hover and shows the busy cursor) and swallows clicks. */
 export const LoadingBlocksClick: Story = {
   name: "Test: loading blocks interaction",
   args: { loading: true, children: "در حال ارسال" },
   play: async ({ args, canvas }) => {
     const button = canvas.getByRole("button");
-    await expect(button).toBeDisabled();
-    await userEvent.click(button, { pointerEventsCheck: 0 });
+    await expect(button).not.toBeDisabled();
+    await expect(button).toHaveAttribute("aria-disabled", "true");
+    await expect(button).toHaveAttribute("aria-busy", "true");
+    await userEvent.click(button);
     await expect(args.onClick).not.toHaveBeenCalled();
   },
 };

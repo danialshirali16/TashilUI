@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, MouseEvent, ReactNode } from "react";
 import { cx } from "../../lib/cx";
 import styles from "./Button.module.css";
 
@@ -46,16 +46,30 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     type = "button",
     className,
     children,
+    onClick,
     ...rest
   },
   ref,
 ) {
+  // Loading uses aria-disabled (not native `disabled`) so the element still
+  // receives hover and honours `cursor: progress` — native disabled buttons
+  // ignore the cursor property. Clicks are blocked here instead.
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (loading) {
+      event.preventDefault();
+      return;
+    }
+    onClick?.(event);
+  };
+
   return (
     <button
       ref={ref}
       type={type}
-      disabled={disabled || loading}
+      disabled={disabled}
+      aria-disabled={disabled || loading || undefined}
       aria-busy={loading || undefined}
+      onClick={handleClick}
       data-intent={intent}
       data-variant={variant}
       className={cx(
