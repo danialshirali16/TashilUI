@@ -70,6 +70,17 @@ export type {
 export { DropMenuAddItem } from "./components/DropMenuAddItem";
 export type { DropMenuAddItemProps } from "./components/DropMenuAddItem";
 
+// Menu — action-menu surface + rows (atomic building blocks for context/action menus).
+export { Menu, MenuSection, MenuSeparator, MenuRadioGroup, MenuRadioItem } from "./components/Menu";
+export type {
+  MenuProps,
+  MenuRadioGroupProps,
+  MenuRadioItemProps,
+} from "./components/Menu";
+
+export { MenuItem } from "./components/MenuItem";
+export type { MenuItemProps, MenuItemType, MenuItemHeight } from "./components/MenuItem";
+
 export { Modal, ModalClose } from "./components/Modal";
 export type { ModalProps } from "./components/Modal";
 

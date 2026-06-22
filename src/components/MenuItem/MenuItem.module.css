@@ -1,0 +1,117 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: stretch;
+  inline-size: 100%;
+  min-inline-size: var(--size-control-min-lg);
+  max-inline-size: 288px;
+  padding-inline: var(--space-12);
+  margin: 0;
+  border: 0;
+  background: var(--color-background-neutral-transparent-default);
+  font-family: var(--font-family);
+  text-align: start;
+  cursor: pointer;
+}
+
+.root[data-height="low"] {
+  padding-block: var(--space-10);
+}
+
+/* high block padding (14px) has no spacing token — matches Figma py-[14px]. */
+.root[data-height="high"] {
+  padding-block: 14px;
+}
+
+.root:hover:not([data-disabled]),
+.root[data-highlighted]:not([data-disabled]) {
+  background: var(--color-background-neutral-transparent-hover);
+}
+
+.root[data-type="destructive"]:hover:not([data-disabled]),
+.root[data-type="destructive"][data-highlighted]:not([data-disabled]) {
+  background: var(--color-background-error-transparent-hover);
+}
+
+.root:focus-visible {
+  outline: none;
+}
+
+.root[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* ── header: label + accessory (packed to the inline-start / right) ──────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-12);
+  inline-size: 100%;
+}
+
+.label {
+  flex: 1 0 0;
+  min-inline-size: 0;
+  overflow: hidden;
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  letter-spacing: var(--letter-spacing-body-md);
+  color: var(--color-text-subtle);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.root[data-type="destructive"] .label {
+  color: var(--color-text-error-default);
+}
+
+.root[data-disabled] .label {
+  color: var(--color-text-disable);
+}
+
+/* ── accessory holder (20px) ────────────────────────────────────────────── */
+.accessory {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: var(--space-20);
+  block-size: var(--space-20);
+  color: var(--color-icon-subtle);
+}
+
+.accessory svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.root[data-type="destructive"] .accessory {
+  color: var(--color-icon-error-default);
+}
+
+.root[data-disabled] .accessory {
+  color: var(--color-icon-disable);
+}
+
+.accessoryPrimary {
+  color: var(--color-icon-primary-default);
+}
+
+/* ── description ────────────────────────────────────────────────────────── */
+.description {
+  inline-size: 100%;
+  padding-inline-start: var(--space-32);
+  overflow: hidden;
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  letter-spacing: var(--letter-spacing-caption-md);
+  color: var(--color-text-subtler);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.root[data-disabled] .description {
+  color: var(--color-text-disable);
+}
