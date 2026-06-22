@@ -1,0 +1,87 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as DropMenuStories from "./DropMenu.stories";
+
+<Meta of={DropMenuStories} name="Overview" />
+
+# DropMenu
+
+A dropdown menu built on Radix Popover that lets users select one or more items from a list. The
+menu surface contains an optional search field for filtering, a scrollable `DropMenuList` of options,
+and an optional add-new footer. Supports live search, single vs. multiple selection, and full
+keyboard navigation (arrows / Home / End / Enter; Esc and click-outside close it). RTL-first,
+semantic tokens only.
+
+## When to use
+
+- **Select from a list** — when options are dynamic, numerous (5+), or space-constrained.
+- **Single vs. multiple choice** — single-select closes the menu on commit; multi-select keeps it
+  open and shows checkboxes.
+- **Searchable lists** — use `searchable={true}` to filter by label or custom `searchText`.
+- **Add-new workflows** — the optional `addNewLabel` footer invokes `onAddNew` to create items
+  on the fly.
+
+## Single-select with search
+
+The most common pattern: a trigger button, a search field, and a list that closes on selection.
+
+<Canvas of={DropMenuStories.Default} />
+
+## Multiple selection
+
+Set `multiple={true}` to show checkboxes and keep the menu open as you toggle items. The list
+retains its state until you click outside or press Esc.
+
+<Canvas of={DropMenuStories.Multiple} />
+
+## Icons and descriptions
+
+Each option can carry a leading `icon` and an optional `description`. The icon is shown at the
+inline-start; the description floats below the label in a subtler color.
+
+<Canvas of={DropMenuStories.WithIcon} />
+
+## Disabled options
+
+Set `disabled: true` on an option to prevent selection. Disabled items are visually faded and
+skipped by keyboard navigation.
+
+<Canvas of={DropMenuStories.WithDisabled} />
+
+## Keyboard navigation
+
+- **↓ / ↑** — move selection within filtered list.
+- **Home / End** — jump to first / last.
+- **Enter** — select the active option (closes in single-select, toggles in multi-select).
+- **Esc** — close the menu.
+- **Click outside** — close the menu.
+
+When search is active, typing the field and then using arrows / Enter works as expected; the search
+query is preserved until you clear it or close the menu.
+
+## Accessibility
+
+- **Listbox and options** — the menu list is `role="listbox"`, each option is `role="option"` with
+  `aria-selected` reflecting its state.
+- **Multi-select** — `aria-multiselectable="true"` is set on the listbox when `multiple={true}`.
+- **Focus management** — Radix Popover scopes focus within the menu and restores it to the trigger
+  on close. When a search field is present, focus lands on it automatically.
+- **Keyboard support** — arrows, Home, End, and Enter all follow ARIA patterns.
+- **Search integration** — the search field's `aria-controls` points to the listbox so screen readers
+  announce that it controls the options.
+
+## Token-driven styling
+
+Colors, spacing, radii, and borders are semantic tokens — **no hardcoded color values**. The panel
+sits on `--color-background-neutral-zero-default` with a `--border-width-default` solid
+`--color-border-subtle` border, `--radius-4` corners, and the Figma "Leviation/Menu" elevation
+shadow. Rows (`DropMenuItem`) pad with `--space-*` and come in two sizes via the `size` prop —
+`sm` (`--space-10` block padding) and `md`. Hover and the keyboard-active row use
+`--color-background-primary-transparent-hover`; a selected checkbox fills with
+`--color-background-primary-default`. The list region scrolls to a max height with the OS-default
+scrollbar. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={DropMenuStories.Default} />
+
+<ArgTypes of={DropMenuStories.Default} />

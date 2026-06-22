@@ -1,0 +1,86 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as SearchFieldStories from "./SearchField.stories";
+
+<Meta of={SearchFieldStories} name="Overview" />
+
+# SearchField
+
+A 40px search input with a leading magnifier (inline-start), a clear button (✕) that appears when
+the field has a value, and an optional «Enter ↵» hint chip shown while focused. Built with pure CSS,
+semantic tokens, and full RTL support. Controlled or uncontrolled. The caret is the brand primary
+color.
+
+## When to use
+
+- **Search within lists** — the SearchField is the workhorse inside DropMenu and other
+  filter-and-select workflows.
+- **Search queries** — forms, headers, or standalone search pages.
+- **Immediate filtering** — pair with `onChange` to drive live filtering of results.
+- **Enter-to-submit** — use `onSearch` to capture Enter presses and trigger a server query or
+  navigation.
+
+## Empty state
+
+The placeholder text and leading magnifier are always visible. The clear button is hidden.
+
+<Canvas of={SearchFieldStories.Rest} />
+
+## Filled
+
+Once the field has a value, the clear button (✕) appears at the inline-end. Clicking it empties the
+field and invokes `onClear`. The magnifier and Enter hint remain visible.
+
+<Canvas of={SearchFieldStories.Filled} />
+
+## Disabled
+
+Set `disabled` to grey out the field and prevent all interaction. The magnifier, text, and clear
+button all use the disabled color ramp. The clear button never appears while disabled.
+
+<Canvas of={SearchFieldStories.Disabled} />
+
+## Enter hint
+
+By default, an «Enter ↵» chip appears at the inline-end while the field is focused (and hidden
+when blurred). Set `enterHint={false}` to hide it.
+
+<Canvas of={SearchFieldStories.NoEnterHint} />
+
+## Controlled vs. uncontrolled
+
+The field works both ways. For controlled usage, wire up `value` and `onChange`. For uncontrolled,
+use `defaultValue`. The `onSearch` callback fires when the user presses Enter; `onClear` fires
+when the built-in clear button is clicked.
+
+<Canvas of={SearchFieldStories.Controlled} />
+
+## Placeholder swapping on focus
+
+By default, the placeholder remains constant across rest and focus states. Pass `focusPlaceholder`
+to override it when the field is focused — useful for progressive disclosure of format hints.
+
+## Accessibility
+
+- **Searchbox role** — the input is `type="search"`, exposing it as a searchbox to assistive tech.
+- **Clear button** — a real `<button>` with `aria-label="پاک کردن"` (Persian: "clear").
+- **Decorative elements** — the magnifier icon and Enter hint are `aria-hidden="true"`.
+- **Focus indicator** — the native input outline is removed; focus is shown by the field border
+  switching to the selected/brand color (via `:focus-within`).
+- **Disabled state** — uses the native `disabled` attribute; no additional ARIA needed.
+
+## Token-driven styling
+
+Colors, sizes, and borders are semantic tokens — **no hardcoded color values**. The field is
+`--space-40` (40px) tall with body-sm text (`--font-size-body-sm` / `--line-height-body-sm`) and a
+`--border-width-default` solid `--color-border-input-default` border. Hover adds a 2px
+`--color-border-input-shadow` ring; focus switches the border to `--color-border-selected-default`.
+The caret is `--color-icon-primary-default`, the magnifier `--color-icon-placeholder`, and the clear
+✕ `--color-icon-subtler`. The «Enter ↵» chip uses caption-sm text on
+`--color-background-neutral-subtle-default` with a `--color-border-subtle` border. Themes switch
+with no component changes.
+
+## API reference
+
+<Controls of={SearchFieldStories.Rest} />
+
+<ArgTypes of={SearchFieldStories.Rest} />
