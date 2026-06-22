@@ -1,0 +1,88 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as MenuStories from "./Menu.stories";
+
+<Meta of={MenuStories} name="Overview" />
+
+# Menu
+
+An elevated, rounded action menu built on Radix DropdownMenu: a trigger button opens a surface
+containing sections of menu items separated by dividers. Keyboard navigation, type-ahead, focus
+management, and Esc / click-outside to close are handled by Radix. Compose with `MenuSection`s of
+`MenuItem`s, and single-select radio rows using `MenuRadioGroup` + `MenuRadioItem`. Pure CSS,
+semantic tokens, RTL-first.
+
+## When to use
+
+- **Action menus** — open a list of contextual actions from a trigger button or icon.
+- **Multi-section workflows** — group related actions and separate them visually with dividers.
+- **Single-select or multi-select options** — use radio groups for exclusive choices or checkbox items
+  for toggles that keep the menu open.
+- **Destructive actions** — mark certain items in red to signal caution.
+
+## Menu sections and dividers
+
+Compose the menu from `MenuSection` components. Dividers are inserted automatically between
+sections, so adding or removing a section adds or removes the divider above it. The first section
+has no divider.
+
+<Canvas of={MenuStories.Default} />
+
+## Menu item types
+
+The `MenuItem` component supports four types via the `type` prop:
+
+- **`default`** — neutral action with an optional leading icon (e.g., copy, edit, export).
+- **`destructive`** — red action, typically with a leading icon (e.g., delete, remove).
+- **`no-icon`** — text-only; displays a ✓ when `selected`, without an accompanying icon.
+- **`checkbox`** — a multi-select control. Toggles `selected` on click, the menu stays open, and
+  `onCheckedChange` fires.
+
+The `description` prop renders a secondary caption under the label; `disabled` greys out the row.
+
+<Canvas of={MenuStories.Mixed} />
+
+## Single-select with radio items
+
+For exclusive choices, wrap `MenuRadioItem`s inside a `MenuRadioGroup`. Each radio item reuses our
+`RadioButton` with full menu-row padding. Arrow keys navigate and select within the radio group,
+moving the selection one item per keystroke. The menu's up/down navigation does *not* step through
+radio rows — radio selection is independent.
+
+<Canvas of={MenuStories.Mixed} />
+
+## Dynamic sections
+
+Add or remove `MenuSection`s at runtime. Dividers are managed automatically, so the UI updates
+correctly whether sections are created, removed, or reordered.
+
+<Canvas of={MenuStories.DynamicSections} />
+
+## Accessibility
+
+- **Surface and roles** — the dropdown surface is `role="menu"`. Regular menu items are `role="menuitem"`;
+  checkbox items are `role="menuitemcheckbox"` with `aria-checked`. Section dividers are
+  `role="separator"`.
+- **Focus and keyboard** — Radix DropdownMenu provides roving focus, arrow-key navigation within
+  the menu, type-ahead (start typing a label to jump to an item), and Esc / click-outside to close.
+- **Radio selection** — radio items inside a `MenuRadioGroup` use our `RadioButton` with its own
+  arrow-key single-select behavior, so radio rows are not part of the menu's vertical navigation
+  sweep.
+- **Disabled items** — the standard `disabled` prop prevents selection and greys out the row.
+
+## Token-driven styling
+
+Colors, spacing, radii, and borders are semantic tokens — no hardcoded color values. The surface
+sits on `--color-background-neutral-zero-default` with a `--border-width-default` solid
+`--color-border-default` border, `--radius-8` corners, and a soft elevation shadow. Sections pad
+with `--space-8`; rows (`MenuItem`) pad with `--space-12` inline and 10px (`low`) or 14px (`high`)
+block. Labels use body-md (`--font-size-body-md`) in `--color-text-subtle`; descriptions use
+caption-md in `--color-text-subtler`; destructive rows switch to `--color-text-error-default` /
+`--color-icon-error-default`; hover uses `--color-background-neutral-transparent-hover` (or
+`--color-background-error-transparent-hover` for destructive). Dividers are a
+`--color-border-default` line. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={MenuStories.Default} />
+
+<ArgTypes of={MenuStories.Default} />
