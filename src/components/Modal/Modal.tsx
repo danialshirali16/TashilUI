@@ -79,4 +79,4 @@ export function Modal({
 }
 
 /** Re-export Radix Close so consumers can close from custom footer buttons. */
-export const ModalClose = Dialog.Close;
+export const ModalClose: typeof Dialog.Close = Dialog.Close;

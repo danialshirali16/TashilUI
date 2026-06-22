@@ -60,4 +60,4 @@ export function Tooltip({
 /**
  * Wrap your app (or Storybook) once. Radix requires a Provider above any Tooltip.
  */
-export const TooltipProvider = RadixTooltip.Provider;
+export const TooltipProvider: typeof RadixTooltip.Provider = RadixTooltip.Provider;

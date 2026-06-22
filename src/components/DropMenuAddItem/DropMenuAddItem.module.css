@@ -1,0 +1,40 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-8);
+  inline-size: 100%;
+  padding-inline: var(--space-12);
+  padding-block: var(--space-10);
+  margin: 0;
+  background: var(--color-background-neutral-default);
+  border: 0;
+  border-block-start: var(--border-width-default) solid var(--color-border-default);
+  color: var(--color-link-primary-default);
+  font-family: var(--font-family);
+  cursor: pointer;
+}
+
+.root:hover {
+  color: var(--color-link-primary-hover);
+}
+
+.label {
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body-sm);
+  letter-spacing: var(--letter-spacing-body-small);
+  white-space: nowrap;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: var(--size-icon-sm);
+  block-size: var(--size-icon-sm);
+  color: inherit;
+}
+
+.icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+}

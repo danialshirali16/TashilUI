@@ -21,6 +21,9 @@ export type { TextFieldSmallProps } from "./components/TextFieldSmall";
 export { OTPField } from "./components/OTPField";
 export type { OTPFieldProps } from "./components/OTPField";
 
+export { SearchField } from "./components/SearchField";
+export type { SearchFieldProps } from "./components/SearchField";
+
 export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 
@@ -49,6 +52,23 @@ export type {
   InputFilePreviewType,
   InputFilePreviewSize,
 } from "./components/InputFilePreview";
+
+// DropMenu — atomic sub-components used to compose the dropdown / select / combobox Inputs.
+export { DropMenu } from "./components/DropMenu";
+export type { DropMenuProps, DropMenuOption } from "./components/DropMenu";
+
+export { DropMenuList } from "./components/DropMenuList";
+export type { DropMenuListProps } from "./components/DropMenuList";
+
+export { DropMenuItem } from "./components/DropMenuItem";
+export type {
+  DropMenuItemProps,
+  DropMenuItemSize,
+  DropMenuItemAccessory,
+} from "./components/DropMenuItem";
+
+export { DropMenuAddItem } from "./components/DropMenuAddItem";
+export type { DropMenuAddItemProps } from "./components/DropMenuAddItem";
 
 export { Modal, ModalClose } from "./components/Modal";
 export type { ModalProps } from "./components/Modal";

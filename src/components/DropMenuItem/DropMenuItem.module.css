@@ -1,0 +1,131 @@
+.root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  inline-size: 100%;
+  padding-inline: var(--space-12);
+  margin: 0;
+  border: 0;
+  background: var(--color-background-primary-transparent-default);
+  font-family: var(--font-family);
+  text-align: start;
+  cursor: pointer;
+}
+
+.root[data-size="sm"] {
+  padding-block: var(--space-10);
+}
+
+/* md block padding (14px) has no spacing token — matches Figma py-[14px]. */
+.root[data-size="md"] {
+  padding-block: 14px;
+}
+
+.root:hover:not([data-disabled]),
+.root[data-active]:not([data-disabled]) {
+  background: var(--color-background-primary-transparent-hover);
+}
+
+.root[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* ── label + description ────────────────────────────────────── */
+.content {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+  min-inline-size: 0;
+}
+
+.label {
+  inline-size: 100%;
+  overflow: hidden;
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  letter-spacing: var(--letter-spacing-body-md);
+  color: var(--color-text-subtle);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  inline-size: 100%;
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  letter-spacing: var(--letter-spacing-caption-md);
+  color: var(--color-text-subtler);
+}
+
+.root[data-disabled] .label,
+.root[data-disabled] .description {
+  color: var(--color-text-disable);
+}
+
+/* ── trailing accessory ─────────────────────────────────────── */
+.holder {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--space-20);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--size-icon-sm);
+  block-size: var(--size-icon-sm);
+  color: var(--color-icon-subtler);
+}
+
+.icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.iconSelected {
+  color: var(--color-icon-primary-default);
+}
+
+.root[data-disabled] .icon {
+  color: var(--color-icon-disable);
+}
+
+/* visual checkbox (presentational — selection is driven by `selected`) */
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--space-16);
+  block-size: var(--space-16);
+  background: var(--color-background-input);
+  border: var(--border-width-default) solid var(--color-border-input-default);
+  border-radius: var(--radius-4);
+}
+
+.checkbox[data-checked] {
+  background: var(--color-background-primary-default);
+  border-color: var(--color-background-primary-default);
+}
+
+.root[data-disabled] .checkbox {
+  background: var(--color-background-disable);
+  border-color: var(--color-border-disable);
+}
+
+.checkGlyph {
+  display: inline-flex;
+  inline-size: var(--space-12);
+  block-size: var(--space-12);
+  color: var(--color-icon-oncolor-default);
+}
+
+.checkGlyph svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
