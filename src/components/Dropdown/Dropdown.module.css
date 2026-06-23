@@ -1,0 +1,191 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  inline-size: 100%;
+  font-family: var(--font-family);
+}
+
+/* ── control (the bordered trigger box) ─────────────────────── */
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-block-size: var(--space-56);
+  padding-inline: var(--space-12);
+  background-color: var(--color-background-input);
+  /* Figma: 1.5px border (no design token for this width) */
+  border: 1.5px solid var(--color-border-input-default);
+  border-radius: var(--radius-4);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+
+.control:hover {
+  border-color: var(--color-border-input-hover);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-input-shadow);
+}
+
+.control[data-state="open"],
+.control:focus-visible {
+  border-color: var(--color-border-selected-default);
+  box-shadow: none;
+}
+
+/* error */
+.field[data-status="error"] .control {
+  border-color: var(--color-border-error-default);
+}
+.field[data-status="error"] .control:hover {
+  box-shadow: 0 0 0 var(--border-width-thick) var(--color-border-error-subtle);
+}
+.field[data-status="error"] .control[data-state="open"] {
+  border-color: var(--color-border-selected-default);
+}
+
+/* disabled */
+.field[data-disabled] .control {
+  background-color: var(--color-background-disable);
+  border-color: var(--color-border-disable);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ── value area (placeholder / single value / chips) ────────── */
+.valueArea {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  min-inline-size: 0;
+  /* leave room for the floated label at the top */
+  padding-block: var(--space-24) var(--space-6);
+}
+
+.single {
+  overflow: hidden;
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-subtle);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-placeholder);
+}
+
+.field[data-disabled] .single {
+  color: var(--color-text-disable);
+}
+
+/* ── floating label ─────────────────────────────────────────── */
+.label {
+  position: absolute;
+  inset-inline: var(--space-12);
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height-body-md);
+  color: var(--color-text-placeholder);
+  text-align: start;
+  pointer-events: none;
+  transition: inset-block-start var(--duration-fast) ease, font-size var(--duration-fast) ease,
+    color var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.control[data-floated] .label {
+  inset-block-start: var(--space-8);
+  transform: none;
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  color: var(--color-text-subtler);
+}
+
+.control[data-state="open"] .label {
+  color: var(--color-text-selected);
+}
+
+.field[data-status="error"] .control[data-floated] .label {
+  color: var(--color-text-error-default);
+}
+.field[data-status="error"] .control[data-state="open"] .label {
+  color: var(--color-text-selected);
+}
+
+.field[data-disabled] .label {
+  color: var(--color-text-disable);
+}
+
+.optionalTag {
+  margin-inline-start: var(--space-2);
+  color: inherit;
+  font: inherit;
+}
+
+/* ── clear ✕ + chevron ──────────────────────────────────────── */
+.clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: var(--size-icon-sm);
+  block-size: var(--size-icon-sm);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-icon-subtle);
+  cursor: pointer;
+}
+
+.clear svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: var(--size-icon-sm);
+  block-size: var(--size-icon-sm);
+  color: var(--color-icon-subtle);
+  transition: transform var(--duration-fast) ease;
+}
+
+.chevron svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.control[data-state="open"] .chevron {
+  transform: rotate(180deg);
+}
+
+.field[data-disabled] .chevron {
+  color: var(--color-icon-disable);
+}
+
+/* ── message ────────────────────────────────────────────────── */
+.message {
+  margin: 0;
+  padding-inline: var(--space-16);
+  font-size: var(--font-size-caption-md);
+  line-height: var(--line-height-caption-md);
+  color: var(--color-text-subtler);
+  text-align: start;
+}
+
+.field[data-status="error"] .message {
+  color: var(--color-text-error-default);
+}
+.field[data-disabled] .message {
+  color: var(--color-text-disable);
+}

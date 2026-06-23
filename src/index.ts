@@ -71,6 +71,9 @@ export { DropMenuAddItem } from "./components/DropMenuAddItem";
 export type { DropMenuAddItemProps } from "./components/DropMenuAddItem";
 
 // Menu — action-menu surface + rows (atomic building blocks for context/action menus).
+export { Dropdown } from "./components/Dropdown";
+export type { DropdownProps, DropdownOption } from "./components/Dropdown";
+
 export { Menu, MenuSection, MenuSeparator, MenuRadioGroup, MenuRadioItem } from "./components/Menu";
 export type {
   MenuProps,

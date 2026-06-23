@@ -50,6 +50,8 @@ export interface DropMenuProps {
   onOpenChange?: (open: boolean) => void;
   /** Side of the trigger to render on. @default "bottom" */
   side?: "top" | "right" | "bottom" | "left";
+  /** Match the panel width to the trigger's width (e.g. for a select field). */
+  matchTriggerWidth?: boolean;
   className?: string;
 }
 
@@ -83,6 +85,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(function DropM
     open,
     onOpenChange,
     side = "bottom",
+    matchTriggerWidth = false,
     className,
   },
   ref,
@@ -184,6 +187,11 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(function DropM
           align="start"
           sideOffset={4}
           dir="rtl"
+          style={
+            matchTriggerWidth
+              ? { inlineSize: "var(--radix-popover-trigger-width)" }
+              : undefined
+          }
           className={cx(styles.root, className)}
           onKeyDown={onKeyDown}
           onOpenAutoFocus={(e) => {

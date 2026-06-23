@@ -1,0 +1,115 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks";
+import * as DropdownStories from "./Dropdown.stories";
+
+<Meta of={DropdownStories} name="Overview" />
+
+# Dropdown
+
+A **floating-label select field** (single or multiple choice) with a search-friendly popup menu. Built with pure CSS, semantic tokens, and full RTL support. The label rests as a placeholder and floats up when the menu opens or a value is selected. Supports optional search, clear button, add-new footer, chip-based multi-select with overflow, helper and error messages, and states for disabled and optional.
+
+## When to use
+
+- **Select from a fixed list** — countries, categories, status values, or any predefined set.
+- **Single or multiple choice** — pick one or many items; multiple renders removable chips.
+- **Large lists with search** — set `searchable` to filter options as the user types.
+- **Add custom items** — use `addNewLabel` and `onAddNew` to let users create new options.
+- **Forms with labels** — the floating label eliminates extra layout space and stays visible during interaction.
+
+## Floating label and placeholder
+
+The label rests centered in the field (placeholder position) when empty and is transparent.
+On open or when a value is selected, the label floats up to a small caption at the inline-start.
+The `placeholder` prop shows helpful text inside the open menu when no value is selected yet.
+
+<Canvas of={DropdownStories.Idle} />
+<Canvas of={DropdownStories.Selected} />
+
+## Single and multiple selection
+
+By default, the field is single-select — picking an item closes the menu and shows the selected label.
+Set `multiple` to allow multiple selections, rendered as removable chips. Use `maxVisibleChips` to cap how many chips display before the rest collapse into a `+N` indicator.
+
+<Canvas of={DropdownStories.Multiple} />
+
+## Search
+
+Set `searchable` to show a search field inside the menu. Options filter as the user types, and the
+field remains focused for continuous interaction.
+
+<Canvas of={DropdownStories.Searchable} />
+
+## Add-new option
+
+Use `addNewLabel` and `onAddNew` to render a footer button in the menu. When clicked, it fires
+the `onAddNew` callback (e.g. to open a dialog or add the typed text to the list).
+
+<Canvas of={DropdownStories.WithAddNew} />
+
+## Clearable
+
+Set `clearable` to show a ✕ button in the field while it has a value. Clicking it empties the selection.
+The clear button is disabled when the field is disabled and does not open the menu.
+
+<Canvas of={DropdownStories.Clearable} />
+
+## Helper text
+
+The `helperText` prop renders descriptive text below the field. Use it to clarify the expected
+format or guide users through the selection.
+
+<Canvas of={DropdownStories.Idle} />
+
+## Error status
+
+Set the `error` prop with an error message to mark the field as invalid. The border, label, and
+message all turn red; the field gets `aria-invalid="true"`. The error message overrides `helperText`.
+
+<Canvas of={DropdownStories.WithError} />
+
+## Disabled
+
+Set `disabled` to grey out the field and prevent all interaction. The label, values, chips, and
+message all use the disabled color ramp. The field is removed from the tab order.
+
+<Canvas of={DropdownStories.Disabled} />
+
+## Optional vs. required
+
+By default, the field is **required**. Set the `optional` prop to mark it as optional — this displays
+«(اختیاری)» next to the label in the same style.
+
+<Canvas of={DropdownStories.Optional} />
+
+## Controlled selection
+
+Use the `value` prop to fully control the selected item(s), and update it via `onValueChange`.
+In single-select mode, `value` is a string; in multiple mode, it is a string array.
+
+<Canvas of={DropdownStories.Controlled} />
+
+## Accessibility
+
+- **Role and focus** — the control is `role="combobox"` with `aria-haspopup="listbox"`, `aria-expanded` (open/closed), and is keyboard-focusable (`tabIndex={0}`). It opens on Enter, Space, or ArrowDown; Esc and click-outside close it.
+- **Label association** — the floating label is wired via `aria-labelledby` to label the combobox.
+- **Menu options** — the popup uses `role="listbox"` with `role="option"` items, each marked with `aria-selected`.
+- **Remove buttons** — the clear ✕ and each chip's remove ✕ are `<button>` elements with Persian aria-labels («پاک کردن» / «حذف»). They stop event propagation to avoid opening the menu.
+- **Error messages** — `aria-invalid="true"` and `aria-describedby` connect the field to error or helper text.
+- **Disabled** — the standard `disabled` attribute and `aria-disabled="true"` prevent interaction.
+
+## Token-driven styling
+
+Colors, spacing, radii, and typography are semantic tokens — **no hardcoded color values**. The
+control is `--space-56` (56px) tall on `--color-background-input` with a `--radius-4` border that
+shifts from `--color-border-input-default` to `--color-border-input-hover` (with a
+`--color-border-input-shadow` ring) on hover, and to `--color-border-selected-default` while open.
+The label is body-md (`--font-size-body-md`) resting and caption-md (`--font-size-caption-md`)
+floated, in `--color-text-placeholder` → `--color-text-subtler` → `--color-text-selected`. Error
+state uses `--color-border-error-default` / `--color-text-error-default`; disabled uses the
+`--color-*-disable` ramp. The selected chips reuse `InputChip`/`InputChips`; the popup is `DropMenu`
+matched to the field width. Themes switch with no component changes.
+
+## API reference
+
+<Controls of={DropdownStories.Idle} />
+
+<ArgTypes of={DropdownStories.default} />
