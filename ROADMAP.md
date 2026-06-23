@@ -3,9 +3,9 @@
 Milestone tracker for the Swiss Army component library (Radix + CSS Modules + tokens, no
 Tailwind/MUI/shadcn). Working rules are in [AGENTS.md](AGENTS.md).
 
-## Current state (as of 2026-06-17) — Milestone 1 ✅ complete & verified
+## Current state (as of 2026-06-23) — M1 ✅; Swiss Army build well underway
 
-**Done**
+**Foundations (M1) — done & verified**
 - Repo scaffolded (pnpm, Vite library mode, TS, git), dependencies installed.
 - **Token pipeline** (`scripts/build-tokens.mjs`, `pnpm tokens`): compiles the Figma W3C
   exports → CSS custom properties with **zero unresolved aliases**. Emits `reference.css`,
@@ -13,35 +13,33 @@ Tailwind/MUI/shadcn). Working rules are in [AGENTS.md](AGENTS.md).
   differentiation verified (TashilPay `#15357A` vs Zamyad/Zhina `#2463EB`).
 - **Foundations:** `reset.css` (RTL default), `global.css`, `fonts.css` (Yekan Bakh
   `@font-face`), `lib/persian.ts`, `lib/cx.ts`.
-- **5 components + stories:** `Button` + `TextField` (pure CSS), `Checkbox` + `Modal` +
-  `Tooltip` (Radix). Barrel `src/index.ts`.
-- **Storybook** `main.ts` (+ `viteFinal` that strips the library build settings so SB's
-  own build works) + `preview.tsx` with RTL/LTR + product-theme toolbar + a11y addon.
-- **Verification — all green:** `pnpm tokens`, `pnpm typecheck`, `pnpm lint:css`,
-  `pnpm build` (tree-shakeable: Radix stays external, per-component CSS, 13 `.d.ts`),
-  and `CI=1 pnpm build-storybook` (all stories compile).
+- **Icon library** — 340 generated icons (see section below).
+- **Storybook** `main.ts` (+ `viteFinal` that strips the library build settings) + `preview.tsx`
+  with RTL/LTR + product-theme toolbar + a11y addon. Stories grouped under **Foundations**,
+  **Base Components** (atomic sub-components), and **Components** (composed/standalone).
+- **Verification — all green:** `pnpm tokens`, `pnpm typecheck`, `pnpm lint:css`, `pnpm build`
+  (tree-shakeable: Radix stays external, per-component CSS), `CI=1 pnpm build-storybook`.
 
-**M1 bundle baseline** (gzip, per component, JS + CSS module; Radix/React excluded as peers):
-| Component | JS (logic) | JS (css-module shim) | CSS |
-|---|---|---|---|
-| Button | 0.50 kB | 0.42 kB | 0.82 kB |
-| TextField | 0.67 kB | 0.36 kB | 0.64 kB |
-| Checkbox | 0.63 kB | 0.21 kB | 0.50 kB |
-| Modal | 0.71 kB | 0.29 kB | 0.72 kB |
-| Tooltip | 0.44 kB | 0.16 kB | 0.31 kB |
+**Components shipped (23):** Button, TextField, TextFieldSmall, TextArea, OTPField, SearchField,
+Checkbox, CheckboxGroup, RadioButton, RadioGroup, Switch, Modal, Tooltip, the chip/file atoms
+(InputChip, InputChips, InputFilePreview), the DropMenu family (DropMenu, DropMenuList,
+DropMenuItem, DropMenuAddItem), the Menu family (Menu, MenuItem + sections/radio helpers), and
+Dropdown. All have stories; 15 have Overview MDX (the Base Components atoms are documented inside
+their parent's Overview rather than individually).
 
-Shared: `index` 0.33 kB, `persian` 0.41 kB, `cx` 0.12 kB (gzip).
+Added Radix deps since M1: `@radix-ui/react-popover` (DropMenu), `@radix-ui/react-dropdown-menu`
+(Menu). DropMenu/Menu panels cap their height to the viewport (`collisionPadding=16`).
 
 ## Radix base per component group (install per-component, tree-shakeable)
 
 | Group | Components | Radix base |
 |---|---|---|
-| Buttons/actions | Button ✅ (all 5 intents × 5 styles × 3 sizes, icon-only, verified vs Figma), ActionIcon | none (pure CSS) |
-| Selection | Checkbox ✅, CheckboxGroup, RadioButton, RadioGroup, Switch | `react-checkbox`, `-radio-group`, `-switch` |
-| Text inputs | TextField ✅, TextFieldSmall, TextArea, NumberField, SearchField, OTP, PlateField, Chips | none (custom; OTP needs care) |
-| Dropdowns/menus | DropMenu, Menu | `react-dropdown-menu`, `-select` |
+| Buttons/actions | Button ✅, ActionIcon | none (pure CSS) |
+| Selection | Checkbox ✅, CheckboxGroup ✅, RadioButton ✅, RadioGroup ✅, Switch ✅ | `react-checkbox`, `-radio-group`, `-switch` |
+| Text inputs | TextField ✅, TextFieldSmall ✅, TextArea ✅, SearchField ✅, OTPField ✅, InputChip/InputChips ✅, InputFilePreview ✅, NumberField, PlateField | none (custom; OTP needs care) |
+| Dropdowns/menus | DropMenu ✅, Menu ✅, Dropdown ✅ | `react-popover` (DropMenu/Dropdown), `react-dropdown-menu` (Menu) |
 | Date & time | Calendar (Jalali), DatePicker | Radix Popover + headless Jalali engine |
-| File upload | Single/Multiple/BoxUploader | none (native input + custom) |
+| File upload | Single/Multiple/BoxUploader _(InputFilePreview ✅ is the thumbnail atom)_ | none (native input + custom) |
 | Overlays/feedback | Modal ✅, Dialogbox, ScrimBG, Tooltip ✅, Progress, StepperCircle | `react-dialog`, `-tooltip`, `-progress` |
 | Navigation/layout | Tabs, Pages (pagination), Scrollbar | `react-tabs`, `-scroll-area`; Pages custom |
 
@@ -67,40 +65,44 @@ verification) live in the **`/new-component` skill** — use it to build a compo
 
 ### Part A — Swiss Army (do first)
 
-**Done (M1):**
-- [x] **Button** — built, Figma-reviewed, stories + interaction tests, Overview. ✅ fully done
-- [~] **TextField** — built + stories. _Needs: Figma review, Overview._
-- [~] **Checkbox** — built + stories. _Needs: Figma review, Overview._
-- [~] **Modal** — built + stories. _Needs: Figma review, Overview._
-- [~] **Tooltip** — built + stories. _Needs: Figma review, Overview._
+**Done — built + stories + Overview (full DoD):**
+- [x] **Button** ✅ (Figma-reviewed, interaction tests, Overview)
+- [x] **TextField** ✅
+- [x] **TextFieldSmall** ✅
+- [x] **TextArea** ✅
+- [x] **OTPField** ✅ _(per-cell focus management)_
+- [x] **SearchField** ✅
+- [x] **Checkbox** ✅
+- [x] **CheckboxGroup** ✅
+- [x] **RadioButton** ✅
+- [x] **RadioGroup** ✅
+- [x] **Switch** ✅
+- [x] **Tooltip** ✅
+- [x] **InputChip / InputChips** ✅ _(the Figma "Chips" — chip atom + row, Base Components)_
+- [x] **InputFilePreview** ✅ _(file thumbnail atom, Base Components)_
+- [x] **DropMenu** ✅ _(+ Base atoms DropMenuList / DropMenuItem / DropMenuAddItem; Radix Popover)_
+- [x] **Menu** ✅ _(+ MenuItem / MenuSection / MenuRadioGroup·Item; Radix DropdownMenu)_
+- [x] **Dropdown** ✅ _(select field composing DropMenu + InputChips)_
+
+**Done — built + stories, Overview still missing:**
+- [~] **Modal** — _Needs: Overview MDX._
 
 **To build, in order:**
 1. [ ] ActionIcon
-2. [ ] Switch
-3. [ ] RadioButton
-4. [ ] RadioGroup
-5. [ ] CheckboxGroup
-6. [ ] TextFieldSmall
-7. [ ] TextArea
-8. [ ] NumberField
-9. [ ] SearchField
-10. [ ] Chips
-11. [ ] OTP _(needs care — per-cell focus management)_
-12. [ ] PlateField _(Iranian license plate — domain-specific)_
-13. [ ] Progress
-14. [ ] ScrimBG _(extract from Modal)_
-15. [ ] Dialogbox
-16. [ ] StepperCircle
-17. [ ] Tabs
-18. [ ] Pages _(pagination)_
-19. [ ] Scrollbar
-20. [ ] DropMenu
-21. [ ] Menu
-22. [ ] Calendar _(Jalali + RTL — highest risk; budget extra time)_
-23. [ ] DatePicker _(Desktop + Mobile; depends on Calendar)_
-24. [ ] SingleUploader
-25. [ ] MultipleUploader
-26. [ ] BoxUploader
+2. [ ] NumberField
+3. [ ] PlateField _(Iranian license plate — domain-specific)_
+4. [ ] Progress
+5. [ ] ScrimBG _(extract from Modal)_
+6. [ ] Dialogbox
+7. [ ] StepperCircle
+8. [ ] Tabs
+9. [ ] Pages _(pagination)_
+10. [ ] Scrollbar
+11. [ ] Calendar _(Jalali + RTL — highest risk; budget extra time)_
+12. [ ] DatePicker _(Desktop + Mobile; depends on Calendar)_
+13. [ ] SingleUploader
+14. [ ] MultipleUploader
+15. [ ] BoxUploader
 
 ### Part B — Zhina components (`db.*`, after Swiss Army)
 
