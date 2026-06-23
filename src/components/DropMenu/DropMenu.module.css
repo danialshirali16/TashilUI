@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: stretch;
   inline-size: 278px;
+  /* cap to the space between the trigger and the viewport edge (collisionPadding=16) */
+  max-block-size: var(--radix-popover-content-available-height);
   padding-block-start: var(--space-8);
   padding-block-end: 0;
   background: var(--color-background-neutral-zero-default);
@@ -23,7 +25,7 @@
 .body {
   flex: 1 1 auto;
   inline-size: 100%;
-  max-block-size: 320px;
+  min-block-size: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
 }

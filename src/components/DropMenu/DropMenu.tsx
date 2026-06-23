@@ -186,6 +186,7 @@ export const DropMenu = forwardRef<HTMLDivElement, DropMenuProps>(function DropM
           side={side}
           align="start"
           sideOffset={4}
+          collisionPadding={16}
           dir="rtl"
           style={
             matchTriggerWidth

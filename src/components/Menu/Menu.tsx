@@ -57,6 +57,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu(
           side={side}
           align={align}
           sideOffset={4}
+          collisionPadding={16}
           className={cx(styles.root, className)}
         >
           <MenuContext.Provider value>{withDividers}</MenuContext.Provider>

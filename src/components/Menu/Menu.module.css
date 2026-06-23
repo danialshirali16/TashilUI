@@ -4,10 +4,12 @@
   align-items: stretch;
   inline-size: max-content;
   min-inline-size: var(--size-control-min-lg);
+  /* cap to the space between the trigger and the viewport edge (collisionPadding=16) */
+  max-block-size: var(--radix-dropdown-menu-content-available-height);
   background: var(--color-background-neutral-zero-default);
   border: var(--border-width-default) solid var(--color-border-default);
   border-radius: var(--radius-8);
-  overflow: hidden;
+  overflow: hidden auto;
   /* Figma elevation (rgba is permitted — only hex is linted). */
   box-shadow: 4px 4px 28px rgba(30, 41, 59, 0.1);
 }
